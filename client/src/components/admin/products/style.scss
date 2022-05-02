@@ -1,0 +1,18 @@
+.product-imgs {
+  display: flex;
+  //   img {
+  //     width: 20%;
+  //   }
+  .ant-image {
+    width: 20%;
+    img {
+      width: 100%;
+    }
+  }
+}
+.Product-admin {
+  .addproduct {
+    margin-bottom: 16px;
+    text-align: right;
+  }
+}

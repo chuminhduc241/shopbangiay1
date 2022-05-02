@@ -1,0 +1,46 @@
+const Comments = require("../models/Comment");
+
+class APIfeatures {
+  constructor(query, queryString) {
+    this.query = query;
+    this.queryString = queryString;
+  }
+  sorting() {
+    this.query = this.query.sort("-createdAt");
+    return this;
+  }
+  paginating() {
+    const page = this.queryString.page * 1 || 1;
+    const limit = this.queryString.limit * 1 || 5;
+    const skip = (page - 1) * limit;
+    this.query = this.query.skip(skip).limit(limit);
+    return this;
+  }
+}
+
+const commentCtrl = {
+  getComments: async (req, res) => {
+    try {
+      const features = new APIfeatures(
+        Comments.find({ id_product: req.params.id })
+          .populate("id_user")
+          .populate("reply.id_user"),
+        req.query
+      )
+        .sorting()
+        .paginating();
+
+      const comments = await features.query;
+
+      res.json({
+        status: "success",
+        result: comments.length,
+        comments,
+      });
+    } catch (err) {
+      return res.status(500).json({ msg: err.message });
+    }
+  },
+};
+
+module.exports = commentCtrl;

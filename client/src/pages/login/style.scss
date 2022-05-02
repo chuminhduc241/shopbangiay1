@@ -1,0 +1,26 @@
+.login {
+  height: 80vh;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  padding: 50px;
+  &-container {
+    padding: 30px;
+    max-width: 400px;
+    width: 100%;
+    box-shadow: 0 2px 5px 0 rgba(51, 62, 73, 0.6);
+    background-color: rgba(240, 248, 255, 0.6);
+    border-radius: 10px;
+    .btn-login {
+      width: 100%;
+      margin-bottom: 30px;
+    }
+    h2 {
+      text-align: center;
+    }
+    label {
+      font-size: 16px;
+      font-weight: 400;
+    }
+  }
+}

@@ -1,0 +1,32 @@
+.Chatbox {
+  position: fixed;
+  background-color: #fff;
+  bottom: 70px;
+  width: 300px;
+  right: 10px;
+  z-index: 1000000000000000;
+  border: 1px solid #fefefe;
+  box-shadow: 1px 3px #e4e4e4;
+}
+.chatbox-title {
+  border-bottom: 1px solid #666;
+  div {
+    font-size: 20px;
+    text-align: center;
+    padding: 10px;
+    background-color: #1890ff;
+  }
+}
+
+.chattop {
+  height: 300px;
+  overflow-y: scroll;
+}
+.chatBox2 {
+  display: flex;
+  align-items: center;
+  background-color: #fff;
+  .text {
+    flex: 1;
+  }
+}
