@@ -62,6 +62,7 @@ io.on("connection", (socket) => {
     // console.log(users)
     // console.log(socket.adapter.rooms)
   });
+  
   socket.on("createComment", async (msg) => {
     const { id_user, content, id_product, createdAt, rating, send, _id } = msg;
     const newComment = new Comments({

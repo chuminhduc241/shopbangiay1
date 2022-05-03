@@ -18,13 +18,9 @@ const UserSchema = mongoose.Schema(
     },
     phone: {
       type: String,
-      required: [true, "vui long nhap so dien thoai cua ban"],
-      trim: true,
     },
     address: {
       type: String,
-      required: [true, "vui long nhap dia chi cua ban"],
-      trim: true,
     },
     role: { type: Number, default: 0 }, //  0 = user , 1 = admin
     avatar: {
