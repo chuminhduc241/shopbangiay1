@@ -15,59 +15,59 @@ const LayoutAdmin = ({ children }) => {
 
   return (
     <div>
-      <nav class="sidebar1 close">
+      <nav className="sidebar1 close">
         <header style={{ backgroundColor: "#7571f9", height: 70 }}>
-          <div class="image-text">
-            <span class="image">
+          <div className="image-text">
+            <span className="image">
               {/* <!--<img src="logo.png" alt="">--> */}
             </span>
 
-            <div class="text logo-text">
-              <span class="name">Codinglab</span>
-              <span class="profession">Web developer</span>
+            <div className="text logo-text">
+              <span className="name">Codinglab</span>
+              <span className="profession">Web developer</span>
             </div>
           </div>
         </header>
-        <div class="menu-bar2">
-          <div class="menu">
-            <ul class="menu-links">
-              <li class="nav-link">
+        <div className="menu-bar2">
+          <div className="menu">
+            <ul className="menu-links">
+              <li className="nav-link">
                 <Link to="/">
-                  <i class="bx bx-home-alt icon"></i>
-                  <span class="text nav-text">Dashboard</span>
+                  <i className="bx bx-home-alt icon"></i>
+                  <span className="text nav-text">Dashboard</span>
                 </Link>
               </li>
 
-              <li class="nav-link">
+              <li className="nav-link">
                 <Link to="/admin/product">
-                  <i class="bx bx-bar-chart-alt-2 icon"></i>
-                  <span class="text nav-text">Sản phẩm</span>
+                  <i className="bx bx-bar-chart-alt-2 icon"></i>
+                  <span className="text nav-text">Sản phẩm</span>
                 </Link>
               </li>
 
-              <li class="nav-link">
+              <li className="nav-link">
                 <Link to="/admin/category">
-                  <i class="bx bx-bell icon"></i>
-                  <span class="text nav-text">Thương hiệu</span>
+                  <i className="bx bx-bell icon"></i>
+                  <span className="text nav-text">Thương hiệu</span>
                 </Link>
               </li>
 
-              <li class="nav-link">
+              <li className="nav-link">
                 <Link to="/admin/user">
-                  <i class="bx bx-pie-chart-alt icon"></i>
-                  <span class="text nav-text">Quản lý tài khoản</span>
+                  <i className="bx bx-pie-chart-alt icon"></i>
+                  <span className="text nav-text">Quản lý tài khoản</span>
                 </Link>
               </li>
-              <li class="nav-link">
+              <li className="nav-link">
                 <Link to="/admin/order">
-                  <i class="bx bx-pie-chart-alt icon"></i>
-                  <span class="text nav-text">Quản lý đơn hàng</span>
+                  <i className="bx bx-pie-chart-alt icon"></i>
+                  <span className="text nav-text">Quản lý đơn hàng</span>
                 </Link>
               </li>
-              <li class="nav-link">
+              <li className="nav-link">
                 <Link to="/admin/user">
-                  <i class="bx bx-pie-chart-alt icon"></i>
-                  <span class="text nav-text">Logout</span>
+                  <i className="bx bx-pie-chart-alt icon"></i>
+                  <span className="text nav-text">Logout</span>
                 </Link>
               </li>
             </ul>
@@ -75,12 +75,12 @@ const LayoutAdmin = ({ children }) => {
         </div>
       </nav>
 
-      <section class="home3">
+      <section className="home3">
         <div className="hom3-header">
-          <i class="fa-solid fa-bars toggle"></i>
+          <i className="fa-solid fa-bars toggle"></i>
           <Avatar src="https://joeschmoe.io/api/v1/random" size={40} />
         </div>
-        <div class="text">{children}</div>
+        <div className="text">{children}</div>
       </section>
     </div>
   );

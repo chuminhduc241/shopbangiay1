@@ -1,31 +1,29 @@
+import ListProduct from "components/admin/Cart";
+import Category from "components/admin/category";
+import AddCategory from "components/admin/category/NewCategory";
+import Chat from "components/admin/Chat";
+import Products from "components/admin/products";
+import NewProduct from "components/admin/products/NewProduct";
+import User from "components/admin/user";
 import { ROUTES } from "constants/routes";
+import ActivationEmail from "pages/activationEmail";
+import CartProduct from "pages/cartProduct";
+import {
+  default as DetailProduct,
+  default as DetailProductPage,
+} from "pages/detail-product";
+import HistoryCart from "pages/HistoryCart";
 import Homepage from "pages/homepage";
-import Login from "../pages/login";
-import Register from "../pages/register";
+import NotFount from "pages/NotFound";
+import ProductsType from "pages/ProductsType";
+import ResetPassword from "pages/resetPassword";
+import Search from "pages/search";
 import React from "react";
 import { Switch, withRouter } from "react-router-dom";
-import PrivateRoute from "./PrivateRoute";
-import PublicRoute from "./PublicRoute";
-import ActivationEmail from "pages/activationEmail";
-import NewProduct from "components/admin/products/NewProduct";
-import Products from "components/admin/products";
-
-import DetailProductPage from "pages/detail-product";
-import DetailProduct from "pages/detail-product";
-import CartProduct from "pages/cartProduct";
-import ProductsType from "pages/ProductsType";
-import Search from "pages/search";
-import AddCategory from "components/admin/category/NewCategory";
-import ResetPassword from "pages/resetPassword";
-import LayoutAdmin from "components/layout/adminLayout";
-import { Route } from "react-router-dom";
+import Login from "../pages/login";
+import Register from "../pages/register";
 import AdminRoute from "./AdminRoute";
-import Category from "components/admin/category";
-import HistoryCart from "pages/HistoryCart";
-import ListProduct from "components/admin/Cart";
-import Chat from "components/admin/Chat";
-import User from "components/admin/user";
-import NotFount from "pages/NotFound";
+import PublicRoute from "./PublicRoute";
 
 const AppRoutesComponent = () => {
   return (
@@ -35,6 +33,7 @@ const AppRoutesComponent = () => {
         <PublicRoute path="/addCate" component={AddCategory} />
         <PublicRoute path="/search" component={Search} />
         <AdminRoute path="/admin/product" component={Products} />
+        <AdminRoute path="/admin" component={Products} />
         <AdminRoute path="/admin/user" component={User} />
         <AdminRoute path="/admin/chat" component={Chat} />
         <AdminRoute path="/admin/order" component={ListProduct} />

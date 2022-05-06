@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { CategoryService } from "services/category-service";
 // API
@@ -8,6 +9,7 @@ export default function Menu({ openMenu, setOpenMenu }) {
   const onClickCloseMenu = () => {
     setOpenMenu(false);
   };
+  const { user } = useSelector((state) => state.auth);
   {
     openMenu
       ? document.querySelector("body").classList.add("active")
@@ -27,11 +29,19 @@ export default function Menu({ openMenu, setOpenMenu }) {
       <div className={`ground-menu ${openMenu && "open"}`}>
         <nav>
           <ul className="menu">
-            <li style={{ "--i": "1" }}>
-              <Link to="/" className="active" onClick={onClickCloseMenu}>
-                trang chủ
-              </Link>
-            </li>
+            {user?.role === 1 ? (
+              <li style={{ "--i": "1" }}>
+                <Link to="/admin" className="active" onClick={onClickCloseMenu}>
+                  Admin
+                </Link>
+              </li>
+            ) : (
+              <li style={{ "--i": "1" }}>
+                <Link to="/" className="active" onClick={onClickCloseMenu}>
+                  trang chủ
+                </Link>
+              </li>
+            )}
             {category.length !== 0
               ? category.map((item) => (
                   <li
