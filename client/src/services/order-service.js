@@ -14,7 +14,12 @@ export class OrderService extends ServiceBase {
     return await this.delete(`/order/${id}`);
   };
   getAllOrder = async (params) => {
-    return await this.get(`/getAllOrder`);
+    const { status } = params;
+    if (status !== 10) {
+      return await this.get(`/getAllOrder/?status_order=${status}`);
+    } else {
+      return await this.get(`/getAllOrder`);
+    }
   };
   getOrderbyUser = async (params) => {
     const { id } = params;

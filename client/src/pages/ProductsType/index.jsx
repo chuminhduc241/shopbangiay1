@@ -4,15 +4,13 @@ import { LazyLoadImage } from "react-lazy-load-image-component";
 import "./style.scss";
 import { ProductService } from "services/product-service";
 import { Pagination, Rate } from "antd";
-import Loading from "pages/LoadingPage";
 import { useLocation } from "react-router-dom";
 import useCustomRouter from "hooks/useCustomRouter";
 import Sorting from "./sorting";
-import { set } from "lodash";
-import ReactPaginate from "react-paginate";
+import Loading from "pages/LoadingPage";
 function ProductsType() {
   const [page, setPage] = useState(1);
-  const [limit, setLimit] = useState(4);
+  const limit = 8;
   const [sort, setSort] = useState("-createdAt");
   const [category, setCategory] = useState();
   const [loading, setLoading] = useState(false);
@@ -24,7 +22,6 @@ function ProductsType() {
     return Math.ceil(data.count / limit);
   }, [data, limit]);
   console.log(totalPages);
-  const localtion = useLocation();
   const productService = new ProductService();
 
   const getProductByID = async (page, limit, sort, category) => {
@@ -55,14 +52,14 @@ function ProductsType() {
     if (numReviews > 0) {
       return (
         <>
-          <Rate value={rate} readOnly />
+          <Rate value={rate} readOnly disabled />
           <p>{numReviews} Đánh giá</p>
         </>
       );
     } else {
       return (
         <>
-          <Rate value={5} readOnly />
+          <Rate value={5} readOnly disabled />
           <p> Chưa có đánh giá</p>
         </>
       );
@@ -100,7 +97,7 @@ function ProductsType() {
               </div>
             </div>
             <div className="group-start-review">
-              {showReview(product.rating, product.numOfReviews)}
+              {showReview(product.ratings, product.numOfReviews)}
             </div>
           </div>
         ))}
@@ -126,12 +123,20 @@ function ProductsType() {
           </div>
         </div>
         {loading && <Loading />}
-        {!loading && ShowProducts(data)}
-        <Pagination
-          Current={page}
-          onChange={handleChangePage}
-          total={totalPages * 10}
-        />
+        {data?.products?.length === 0 && (
+          <h3 style={{ fontSize: 16, color: "#595959", textAlign: "center" }}>
+            Không có sản phẩm nào .
+          </h3>
+        )}
+        {!loading && data?.products?.length !== 0 && ShowProducts(data)}
+        {!loading && data?.products?.length !== 0 && (
+          <Pagination
+            Current={page}
+            onChange={handleChangePage}
+            total={totalPages * 10}
+            style={{ textAlign: "center" }}
+          />
+        )}
       </div>
     </>
   );

@@ -30,7 +30,7 @@ export default function FormWrite({ product_id, socket, user }) {
         rating: star,
       });
       await productService.updatereview({ id: product_id, ratings: star });
-      form.resetFields();
+      setContent("");
       setStar(0);
       $("body,html").animate(
         { scrollTop: $(".list-item-comment").offset().top - 140 },
@@ -83,7 +83,7 @@ export default function FormWrite({ product_id, socket, user }) {
 
   return (
     <div className="group-form-comment">
-      <Form form={form} onFinish={onFinish}>
+      <Form onFinish={onFinish}>
         <Comment
           avatar={
             <Avatar src={showIconImage(ImageDefault, user)} alt="Han Solo" />
@@ -106,15 +106,7 @@ export default function FormWrite({ product_id, socket, user }) {
             />
           </Form.Item>
           <Form.Item shouldUpdate={true}>
-            <Button
-              htmlType="submit"
-              type="primary"
-              disabled={
-                !form.isFieldsTouched(true) ||
-                form.getFieldsError().filter(({ errors }) => errors.length)
-                  .length
-              }
-            >
+            <Button htmlType="submit" type="primary">
               Thêm Bình Luận
             </Button>
           </Form.Item>

@@ -1,14 +1,14 @@
-import { LOCAL_STORAGE } from "../constants/localstorage";
+import LayoutAdmin from "components/layout/adminLayout";
 import React from "react";
+import { useSelector } from "react-redux";
 import { Route } from "react-router-dom";
 import { Redirect } from "react-router-dom/cjs/react-router-dom.min";
-import LayoutAdmin from "components/layout/adminLayout";
 
 const AdminRoute = (props) => {
-  const accessToken = localStorage.getItem(LOCAL_STORAGE.ACCESS_TOKEN);
+  const { user } = useSelector((state) => state.auth);
   return (
     <>
-      {accessToken ? (
+      {user.role === 1 ? (
         <LayoutAdmin>
           <Route {...props} />
         </LayoutAdmin>
@@ -17,7 +17,7 @@ const AdminRoute = (props) => {
           render={(props) => (
             <Redirect
               to={{
-                pathname: "/login",
+                pathname: "/notfound",
                 state: { from: props.location },
               }}
             />

@@ -22,4 +22,7 @@ export class UserServices extends ServiceBase {
     const { id } = params;
     return this.get(`/auth/infor/${id}`);
   };
+  getAllInfor = async (params) => {
+    return this.get(`/auth/all_infor`);
+  };
 }

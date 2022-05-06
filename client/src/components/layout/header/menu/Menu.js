@@ -1,10 +1,9 @@
-import { useSelector, useDispatch } from "react-redux";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import { CategoryService } from "services/category-service";
 // API
 // component
 import "./style.scss";
-import { CategoryService } from "services/category-service";
 export default function Menu({ openMenu, setOpenMenu }) {
   const onClickCloseMenu = () => {
     setOpenMenu(false);
@@ -31,13 +30,6 @@ export default function Menu({ openMenu, setOpenMenu }) {
             <li style={{ "--i": "1" }}>
               <Link to="/" className="active" onClick={onClickCloseMenu}>
                 trang chủ
-              </Link>
-              <Link
-                to="/admin/chat"
-                className="active"
-                onClick={onClickCloseMenu}
-              >
-                chat
               </Link>
             </li>
             {category.length !== 0

@@ -96,7 +96,7 @@ const Chat = () => {
   }, [messages]);
   return (
     <div>
-      <div class="Chatbox">
+      <div className="Chatbox">
         <div className="chatbox-title">
           <div>Hỗ trợ</div>
         </div>

@@ -1,9 +1,13 @@
-import { LockOutlined, UserOutlined } from "@ant-design/icons";
-import { Button } from "antd";
+import {
+  GooglePlusOutlined,
+  LockOutlined,
+  UserOutlined,
+} from "@ant-design/icons";
+import { Button, Form, Input, Modal } from "antd";
 import popup from "components/common/Popup/index";
 import { LOCAL_STORAGE } from "constants/localstorage";
-import { FastField, Form, Formik } from "formik";
-import React from "react";
+import { FastField, Formik } from "formik";
+import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { loginSuccess } from "redux/authSlice";
@@ -11,15 +15,34 @@ import { AuthServices } from "services/auth-service";
 import * as Yup from "yup";
 import { Link } from "react-router-dom";
 import InputField from "../register/InputField";
-import "./style.scss";
-
+import "./style.css";
+const formItemLayout = {
+  labelCol: {
+    xs: {
+      span: 24,
+      pd: 0,
+    },
+    sm: {
+      span: 24,
+    },
+    lg: {
+      span: 24,
+    },
+    xl: {
+      span: 24,
+    },
+  },
+};
 const Login = () => {
+  const [form] = Form.useForm();
   const user = {
     email: "",
     password: "",
   };
+  const [formForget] = Form.useForm();
   const dispatch = useDispatch();
   const history = useHistory();
+  const [isForgotPassword, setIsForgetPassword] = useState(false);
   const SignupSchema = Yup.object().shape({
     email: Yup.string()
       .email("Email không hợp lệ")
@@ -45,47 +68,141 @@ const Login = () => {
   };
 
   return (
-    <div className="login">
-      <div className="login-container">
-        <Formik
-          initialValues={user}
-          validationSchema={SignupSchema}
-          onSubmit={(values) => handleRegister(values)}
-        >
-          {(formikProps) => {
-            return (
-              <Form>
-                <h2>Đăng nhập</h2>
-                <FastField
-                  icon={<UserOutlined className="site-form-item-icon" />}
-                  name="email"
-                  component={InputField}
-                  placeholder="Email"
+    <>
+      <div className="group-login">
+        <div className="main-login">
+          <div className="container-login">
+            <h3>Chào Mừng</h3>
+            <Form
+              {...formItemLayout}
+              form={form}
+              layout="vertical"
+              name="normal_login"
+              className="login-form"
+              initialValues={{
+                remember: true,
+              }}
+              onFinish={handleRegister}
+            >
+              <Form.Item
+                label="Email"
+                name="email"
+                className="input-email"
+                rules={[
+                  {
+                    type: "email",
+                    message: "E-mail không hợp lệ !",
+                  },
+                  {
+                    required: true,
+                    message: "Vui lòng nhập đúng E-mail !",
+                  },
+                ]}
+                hasFeedback
+              >
+                <Input
+                  prefix={<UserOutlined className="site-form-item-icon" />}
+                  placeholder="Nhập email"
+                  id="email-login"
                 />
-                <FastField
-                  name="password"
-                  component={InputField}
-                  placeholder="Mật khẩu"
+              </Form.Item>
+              <Form.Item
+                label="Mật khẩu"
+                className="input-password"
+                name="password"
+                rules={[
+                  {
+                    required: true,
+                    type: "string",
+                    message: "Vui lòng nhập mật khẩu của bạn !",
+                  },
+                ]}
+              >
+                <Input.Password
+                  prefix={<LockOutlined className="site-form-item-icon" />}
                   type="password"
-                  icon={<LockOutlined className="site-form-item-icon" />}
+                  placeholder="nhập mật khẩu"
                 />
-
-                <Button className="btn-login" type="primary" htmlType="submit">
-                  Đăng nhập
-                </Button>
-              </Form>
-            );
-          }}
-        </Formik>
-        <p style={{ textAlign: "right" }}>
-          Bạn chưa có tài khoản ?
-          <Button type="link" danger>
-            <Link to={"/register"}>Đăng ký</Link>
-          </Button>
-        </p>
+              </Form.Item>
+              <div className="group-login-link">
+                <Form.Item shouldUpdate={true}>
+                  {() => (
+                    <Button
+                      type="primary"
+                      htmlType="submit"
+                      className="login-form-button btn-login"
+                      disabled={
+                        !form.isFieldsTouched(true) ||
+                        form
+                          .getFieldsError()
+                          .filter(({ errors }) => errors.length).length
+                      }
+                    >
+                      Đăng Nhập
+                    </Button>
+                  )}
+                </Form.Item>
+              </div>
+            </Form>
+            <div className="connect-with-internet">
+              <p>Hoặc đăng nhập bằng</p>
+            </div>
+            <div className="connect-link">
+              <p>Bạn chưa có tài khoản đăng ký </p>
+              <Link to="/register" className="btn-register">
+                tại đây
+              </Link>
+            </div>
+            <div className="forgot-password">
+              <p onClick={() => setIsForgetPassword(true)}>Quên mật khẩu</p>
+            </div>
+          </div>
+        </div>
       </div>
-      r
-    </div>
+      <Modal
+        centered
+        title="Nhập Email khôi phục mật khẩu"
+        visible={isForgotPassword}
+        onCancel={() => setIsForgetPassword(false)}
+        cancelText="Hủy"
+        okText="Gửi Email"
+        footer={[
+          <Form form={formForget}>
+            <Button key="back" onClick={() => setIsForgetPassword(false)}>
+              Hủy
+            </Button>
+            <Button
+              key="submit"
+              htmlType="submit"
+              type="primary"
+              // loading={loading}
+            >
+              Gửi Email
+            </Button>
+          </Form>,
+        ]}
+      >
+        <Form form={formForget}>
+          <Form.Item
+            name="email"
+            className="input-email"
+            rules={[
+              {
+                type: "email",
+                message: "E-mail không hợp lệ !",
+              },
+              {
+                required: true,
+                message: "Vui lòng nhập đúng E-mail !",
+              },
+            ]}
+            hasFeedback
+          >
+            <Input prefix={<GooglePlusOutlined />} placeholder="Email" />
+          </Form.Item>
+        </Form>
+      </Modal>
+    </>
   );
 };
 

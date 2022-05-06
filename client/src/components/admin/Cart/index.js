@@ -2,36 +2,32 @@ import { useEffect, useContext, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { FileTextOutlined } from "@ant-design/icons";
 import { Select, Pagination } from "antd";
-// API
 
-// component
 import CartItem from "./CartItem";
 
 import CartInForBuy from "./CartInForBuy";
-// Context
 
-// css
 import "./style.css";
 import { OrderService } from "services/order-service";
 import Loading from "pages/LoadingPage";
 export default function ListProduct() {
   document.querySelector("title").innerHTML = "Danh sách mua hàng";
-
   const { Option } = Select;
   const orderService = new OrderService();
   const [data, setData] = useState([]);
   const [call, setCall] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [sort, setSort] = useState(10);
   useEffect(() => {
     const getAllOrder = async () => {
       setLoading(true);
-      const res = await orderService.getAllOrder();
+      const res = await orderService.getAllOrder({ status: sort });
       console.log(res);
       setData(res);
       setLoading(false);
     };
     getAllOrder();
-  }, [call]);
+  }, [call, sort]);
 
   const [limit, setLimit] = useState(5);
   const [page, setPage] = useState(1);
@@ -39,6 +35,7 @@ export default function ListProduct() {
   // dispatch API
   const hangdlesortOrder = (value) => {
     console.log(value);
+    setSort(value.value);
   };
   return (
     <div className="ground-admin-list">
@@ -47,11 +44,11 @@ export default function ListProduct() {
           <h3>Tất Cả Danh Sách Mua Hàng </h3>
           <Select
             labelInValue
-            defaultValue={3}
+            defaultValue={10}
             style={{ width: "160px" }}
             onChange={hangdlesortOrder}
           >
-            <Option value={3}>Tất Cả Giỏ Hàng</Option>
+            <Option value={10}>Tất Cả Giỏ Hàng</Option>
             <Option value={-1}>Đã Hủy</Option>
             <Option value={0}>Chờ Xét Duyệt</Option>
             <Option value={1}>Đang giao</Option>
@@ -61,7 +58,7 @@ export default function ListProduct() {
         <div className="main-admin-list">
           {data.length === 0 && (
             <div className="no-cart">
-              <FileTextOutlined style={{ fontSize: "20" }} />
+              <FileTextOutlined style={{ fontSize: "24px", marginTop: 20 }} />
               <h4>Không có gì để hiển thị</h4>
             </div>
           )}

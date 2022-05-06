@@ -15,11 +15,11 @@ function App() {
       <Provider store={store}>
         <PersistGate loading={null} persistor={persistor}>
           <Router>
-            <AppContainer>
-              <DataProvider>
+            <DataProvider>
+              <AppContainer>
                 <AppRoutesComponent />
-              </DataProvider>
-            </AppContainer>
+              </AppContainer>
+            </DataProvider>
           </Router>
         </PersistGate>
       </Provider>

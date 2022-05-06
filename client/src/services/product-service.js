@@ -11,7 +11,7 @@ export class ProductService extends ServiceBase {
     return await this.get(`/getProducts/?limit=${limit}&isdiscount=${true}`);
   };
   searchProducts = async (params) => {
-    const { limit, name } = params;
+    const { name } = params;
     return await this.get(`/getProducts/?limit=${100}&name[regex]=${name}`);
   };
   updatereview = async (params) => {
@@ -28,9 +28,12 @@ export class ProductService extends ServiceBase {
     const total = page * limit;
     return await this.get(`/getComments/${product_id}?limit=${total}`);
   };
+  getStarComments = async (params) => {
+    const { id_product } = params;
+    return await this.get(`/getStartComments/${id_product}`);
+  };
   getProductById = async (params) => {
     const { id } = params;
-    console.log(id);
     return await this.get(`getProduct/${id}`);
   };
   getProductByCategory = async (params) => {
@@ -41,14 +44,12 @@ export class ProductService extends ServiceBase {
   };
   addProduct = async (params) => {
     const image = params.images;
-    console.log(image);
 
     return await this.post("/createProduct", { ...params, images: image });
   };
   updateProduct = async (params) => {
     const image = params.images;
     const { id } = params;
-    console.log(image);
     return await this.put(`/updateProduct/${id}`, { ...params, images: image });
   };
   deleteProduct = async (params) => {

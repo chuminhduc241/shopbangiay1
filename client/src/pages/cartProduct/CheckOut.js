@@ -9,7 +9,8 @@ import {
 } from "antd";
 
 import { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { removeCart } from "redux/cartSlice";
 import { OrderService } from "services/order-service";
 import dataCity from "../../data.json";
 
@@ -59,6 +60,7 @@ export default function CheckOut({ visible, setVisible, dataCart }) {
     }
   }, [user]);
   const orderService = new OrderService();
+  const dispatch = useDispatch();
   const onChangeCity = (City) => {
     setCity(City);
   };
@@ -88,8 +90,11 @@ export default function CheckOut({ visible, setVisible, dataCart }) {
     };
     try {
       const res = await orderService.createOrder(cartInformation);
+      dispatch(removeCart());
+      setVisible(false);
       message.success("Đặt hàng thành công");
     } catch (error) {
+      console.log(error);
       message.error("Đặt hàng thất bại");
     }
   };
@@ -115,6 +120,8 @@ export default function CheckOut({ visible, setVisible, dataCart }) {
     };
     try {
       const res = await orderService.createOrder(cartInformation);
+      dispatch(removeCart());
+      setVisible(false);
       message.success("Đặt hàng thành công");
     } catch (error) {
       message.error("Đặt hàng thất bại");

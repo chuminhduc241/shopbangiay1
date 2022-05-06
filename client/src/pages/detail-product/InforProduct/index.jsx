@@ -92,7 +92,16 @@ export default function InForProduct({ product }) {
         "error"
       );
     } else {
-      dispatch(addCart({ product: { ...product, size }, quantity: soLuong }));
+      dispatch(
+        addCart({
+          product: {
+            ...product,
+            size,
+            price: product.price - (product.price * product.discount) / 100,
+          },
+          quantity: soLuong,
+        })
+      );
       popup("Giỏ hàng", "Thêm vào giỏ hàng thành công", "success");
     }
   };

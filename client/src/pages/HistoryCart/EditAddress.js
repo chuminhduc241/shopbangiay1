@@ -1,8 +1,7 @@
-import { useState, useEffect } from "react";
-import { unwrapResult } from "@reduxjs/toolkit";
-import { Button, Form, Select, InputNumber, Input, message } from "antd";
-import dataCity from "../../data.json";
+import { Button, Form, Input, message, Select } from "antd";
+import { useEffect, useState } from "react";
 import { OrderService } from "services/order-service";
+import dataCity from "../../data.json";
 const { Option } = Select;
 const formItemLayout = {
   labelCol: {
@@ -58,7 +57,7 @@ export default function EditAddress({
 
     try {
       setLoading(true);
-      const res = await orderService.updateAddress(data);
+      await orderService.updateAddress(data);
       setLoading(false);
       message.success("Cập nhập địa chỉ thành công");
       setCall(!call);
@@ -71,10 +70,10 @@ export default function EditAddress({
   useEffect(() => {
     form.resetFields(["district"]);
     form.resetFields(["commune"]);
-  }, [city]);
+  }, [city, form]);
   useEffect(() => {
     form.resetFields(["commune"]);
-  }, [district]);
+  }, [district, form]);
 
   return (
     <div className="group-check-out">

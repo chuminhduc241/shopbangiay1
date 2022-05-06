@@ -1,8 +1,7 @@
-import "./style.css";
+import avatar1 from "assets/images/avatar.png";
 import moment from "moment";
 import "moment/locale/vi";
-import avatar1 from "assets/images/avatar.png";
-import User from "components/layout/header/inforUser/User";
+import "./style.css";
 moment.locale("vi");
 export default function Message({ message, own, user }) {
   return (

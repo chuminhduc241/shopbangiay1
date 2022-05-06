@@ -5,7 +5,6 @@ import "./style.scss";
 import { useSelector } from "react-redux";
 export default function Cart() {
   const dataCart = useSelector((state) => state.cart).cart;
-  console.log(dataCart);
   return (
     <>
       <div className="ground-card">

@@ -16,6 +16,5 @@ router.get("/infor", auth, userCtrl.getInforUser);
 router.get("/infor/:id", auth, userCtrl.getInforChat);
 router.get("/logout", userCtrl.logout);
 router.get("/all_infor", auth, authAdmin, userCtrl.getUserAllInfor);
-router.get("/all_infor", auth, authAdmin, userCtrl.getUserAllInfor);
 
 module.exports = router;

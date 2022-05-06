@@ -62,7 +62,7 @@ io.on("connection", (socket) => {
     // console.log(users)
     // console.log(socket.adapter.rooms)
   });
-  
+
   socket.on("createComment", async (msg) => {
     const { id_user, content, id_product, createdAt, rating, send, _id } = msg;
     const newComment = new Comments({
@@ -112,7 +112,7 @@ io.on("connection", (socket) => {
       });
     } else {
       const user = getUser(receiverId);
-      console.log(user);
+
       io.to(user?.socketId).emit("getMessage", {
         senderId,
         text,
@@ -121,7 +121,6 @@ io.on("connection", (socket) => {
   });
 
   socket.on("disconnect", () => {
-    console.log("a user disconnected!");
     removeUser(socket.id);
     console.log(socket.id + "disconnected");
   });

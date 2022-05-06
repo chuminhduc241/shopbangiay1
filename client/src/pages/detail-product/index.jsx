@@ -6,6 +6,8 @@ import { ProductService } from "services/product-service";
 import { Link } from "react-router-dom";
 import Comment from "./comment";
 import InForProduct from "./InforProduct";
+import Loading1 from "pages/loading";
+import Loading from "pages/LoadingPage";
 
 const DetailProduct = () => {
   const [product, setProduct] = useState();
@@ -13,18 +15,20 @@ const DetailProduct = () => {
   const { socket } = useContext(DataContext);
   const { id } = useParams();
   const productService = new ProductService();
+  const [loading, setLoading] = useState(false);
   useEffect(() => {
     if (socket) {
       socket.emit("joinRoom", id);
     }
   }, [socket, id]);
-  console.log(id);
   useEffect(() => {
+    setLoading(true);
     const getProduct = async () => {
       const res = await productService.getProductById({ id: id });
       setProduct(res.product);
     };
     getProduct();
+    setLoading(false);
   }, [id]);
 
   return (
@@ -73,8 +77,14 @@ const DetailProduct = () => {
           {product?.name}
         </Breadcrumb.Item>
       </Breadcrumb>
-      <InForProduct product={product} />
-      <Comment socket={socket} product_id={id} />
+      {loading ? (
+        <Loading1 />
+      ) : (
+        <>
+          <InForProduct product={product} />
+          <Comment socket={socket} product_id={id} />
+        </>
+      )}
     </div>
   );
 };

@@ -3,7 +3,6 @@ import React, { useEffect, useState } from "react";
 import FormInput from "../formInput/FormInput";
 import CommentCard from "./CommentCard";
 import "./commentCard.scss";
-import $ from "jquery";
 let showComments = [];
 const CommentItem = ({ comment, user, socket }) => {
   const [reply, setReply] = useState(false);

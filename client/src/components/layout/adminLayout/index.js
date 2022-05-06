@@ -1,26 +1,22 @@
+import { Avatar } from "antd";
 import React, { useEffect } from "react";
-import "./style.css";
 import { Link } from "react-router-dom";
+import "./style.css";
 const LayoutAdmin = ({ children }) => {
   useEffect(() => {
     const body = document.querySelector("body");
     const sidebar = body.querySelector("nav");
     const toggle = body.querySelector(".toggle");
-    const searchBtn = body.querySelector(".search-box");
 
     toggle.addEventListener("click", () => {
       sidebar.classList.toggle("close");
-    });
-
-    searchBtn.addEventListener("click", () => {
-      sidebar.classList.remove("close");
     });
   }, []);
 
   return (
     <div>
       <nav class="sidebar1 close">
-        <header>
+        <header style={{ backgroundColor: "#7571f9", height: 70 }}>
           <div class="image-text">
             <span class="image">
               {/* <!--<img src="logo.png" alt="">--> */}
@@ -31,20 +27,12 @@ const LayoutAdmin = ({ children }) => {
               <span class="profession">Web developer</span>
             </div>
           </div>
-
-          <i class="bx bx-chevron-right toggle"></i>
         </header>
-
         <div class="menu-bar2">
           <div class="menu">
-            <li class="search-box">
-              <i class="bx bx-search icon"></i>
-              <input type="text" placeholder="Search..." />
-            </li>
-
             <ul class="menu-links">
               <li class="nav-link">
-                <Link href="#">
+                <Link to="/">
                   <i class="bx bx-home-alt icon"></i>
                   <span class="text nav-text">Dashboard</span>
                 </Link>
@@ -58,47 +46,40 @@ const LayoutAdmin = ({ children }) => {
               </li>
 
               <li class="nav-link">
-                <Link href="#">
+                <Link to="/admin/category">
                   <i class="bx bx-bell icon"></i>
                   <span class="text nav-text">Thương hiệu</span>
                 </Link>
               </li>
 
               <li class="nav-link">
-                <Link href="#">
+                <Link to="/admin/user">
                   <i class="bx bx-pie-chart-alt icon"></i>
-                  <span class="text nav-text">Tài khoản</span>
+                  <span class="text nav-text">Quản lý tài khoản</span>
                 </Link>
               </li>
-
               <li class="nav-link">
-                <Link href="#">
-                  <i class="bx bx-heart icon"></i>
-                  <span class="text nav-text">Tin tức</span>
+                <Link to="/admin/order">
+                  <i class="bx bx-pie-chart-alt icon"></i>
+                  <span class="text nav-text">Quản lý đơn hàng</span>
                 </Link>
               </li>
-
               <li class="nav-link">
-                <Link href="#">
-                  <i class="bx bx-wallet icon"></i>
-                  <span class="text nav-text">Wallets</span>
+                <Link to="/admin/user">
+                  <i class="bx bx-pie-chart-alt icon"></i>
+                  <span class="text nav-text">Logout</span>
                 </Link>
               </li>
             </ul>
-          </div>
-
-          <div class="bottom-content">
-            <li class="">
-              <Link href="#">
-                <i class="bx bx-log-out icon"></i>
-                <span class="text nav-text">Logout</span>
-              </Link>
-            </li>
           </div>
         </div>
       </nav>
 
       <section class="home3">
+        <div className="hom3-header">
+          <i class="fa-solid fa-bars toggle"></i>
+          <Avatar src="https://joeschmoe.io/api/v1/random" size={40} />
+        </div>
         <div class="text">{children}</div>
       </section>
     </div>

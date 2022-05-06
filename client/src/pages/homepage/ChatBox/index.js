@@ -6,7 +6,7 @@ const Chatbox = () => {
   const [tonggle, setTonggle] = useState(false);
   return (
     <div>
-      <div class="Chatbox-container">
+      <div className="Chatbox-container">
         {!tonggle && (
           <div className="float" onClick={() => setTonggle(true)}>
             <MessageOutlined style={{ fontSize: 24 }} />

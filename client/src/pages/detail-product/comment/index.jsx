@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { useSelector } from "react-redux";
 import { ProductService } from "services/product-service";
 import FormWrite from "./FormWrite";
@@ -12,7 +12,7 @@ const Comment = ({ socket, product_id }) => {
   return (
     <div>
       <FormWrite user={user} socket={socket} product_id={product_id} />
-      <StarRatingUser />
+      <StarRatingUser product_id={product_id} />
       <ListComment user={user} product_id={product_id} socket={socket} />
     </div>
   );

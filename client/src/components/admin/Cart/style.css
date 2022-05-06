@@ -15,6 +15,9 @@
 	justify-content: space-between;
 	
 }
+.filter-success .ant-select-arrow{
+	top: 35% !important;
+}
 .ground-admin-list .container-admin-list .main-admin-list {
 	margin: 10px 10px 0px 10px;
 }

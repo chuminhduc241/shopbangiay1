@@ -26,19 +26,17 @@ export default function ListComment({ socket, user, product_id }) {
         limit: 3,
       });
       setDataComment(res.comments);
-      console.log(res);
-      console.log(res.comments);
+
       setLoading(false);
     };
     getcomment();
   }, [product_id, page]);
   useEffect(() => {
     if (socket) {
-      console.log("nghe");
       socket.on("sendCommentToClient", (msg) => {
         setDataComment([msg, ...dataComment]);
       });
-      console.log("vao");
+
       return () => socket.off("sendCommentToClient");
     }
   }, [socket, dataComment, setDataComment]);

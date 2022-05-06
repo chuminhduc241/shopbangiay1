@@ -14,6 +14,9 @@ const Tags = ({ form, initcolor }) => {
   const inputRef = useRef();
   const handleClose = (removeTag) => {
     const tagss = tags.filter((tag) => tag !== removeTag);
+    form.setFieldsValue({
+      color: tagss,
+    });
     setTags(tagss);
   };
   const handleInputChange = (e) => {

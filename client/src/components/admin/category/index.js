@@ -86,7 +86,7 @@ const Category = () => {
         <i class="fa-solid fa-plus" style={{ marginRight: "10px" }}></i>
         Thêm thương hiệu
       </Button>
-      <Table columns={columns} pagination={false} dataSource={data && data} />
+      <Table columns={columns} dataSource={data && data} />
       {isNewCategory && (
         <NewCategory
           call={call}

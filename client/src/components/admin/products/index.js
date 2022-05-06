@@ -13,9 +13,10 @@ import "./style.scss";
 import { ProductService } from "services/product-service";
 import NewProduct from "./NewProduct";
 import EditProduct from "./EditProduct";
+
 const Products = () => {
   const [data, setData] = useState([]);
-  const [limit, setLimit] = useState(5);
+  const [limit, setLimit] = useState(100000);
   const [page, setPage] = useState(1);
   const [product, setProduct] = useState();
   const [edit, setEdit] = useState(false);
@@ -56,6 +57,10 @@ const Products = () => {
       title: "Giá",
       dataIndex: "price",
       key: "price",
+      sorter: {
+        compare: (a, b) => a.price - b.price,
+        multiple: 1,
+      },
       render: (price) => <div>{formatter.format(price)} đ</div>,
     },
     {
@@ -85,7 +90,7 @@ const Products = () => {
       title: "Hình ảnh",
       key: "images",
       dataIndex: "images",
-      width: "300px",
+      width: "290px",
       render: (images) => (
         <div className="product-imgs">
           {images.map((c) => (
@@ -131,14 +136,8 @@ const Products = () => {
         <i class="fa-solid fa-plus" style={{ marginRight: "10px" }}></i>
         Thêm sản phẩm
       </Button>
-      <Table columns={columns} pagination={false} dataSource={data?.products} />
-      <div className="phantrang">
-        <Pagination
-          defaultCurrent={page}
-          onChange={handlePagination}
-          total={totalPage * 10}
-        />
-      </div>
+      <Table columns={columns} dataSource={data?.products} />
+
       {isNewProduct && (
         <NewProduct
           isNewProduct={isNewProduct}

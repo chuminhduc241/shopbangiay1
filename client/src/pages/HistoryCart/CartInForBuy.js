@@ -1,20 +1,18 @@
-import { Button, message, Modal } from "antd";
 import {
-  EditOutlined,
-  LoadingOutlined,
   CheckCircleOutlined,
   CloseOutlined,
-  DeleteOutlined,
+  EditOutlined,
+  LoadingOutlined,
   ShoppingCartOutlined,
   WarningOutlined,
-  ExclamationCircleOutlined,
 } from "@ant-design/icons";
-// Component
-import EditAddress from "./EditAddress";
+import { Button, message, Modal } from "antd";
 import moment from "moment";
 import "moment/locale/vi";
 import { useState } from "react";
 import { OrderService } from "services/order-service";
+// Component
+import EditAddress from "./EditAddress";
 moment.locale("vi");
 const formatter = new Intl.NumberFormat("vn");
 export default function CartInForBuy({ id_card, data, call, setCall }) {
@@ -22,38 +20,16 @@ export default function CartInForBuy({ id_card, data, call, setCall }) {
   // function
   const orderService = new OrderService();
   const CancelOrder = async (id_card) => {
-    const res = await orderService.updateStatus({ status: -1, id: id_card });
+    await orderService.updateStatus({ status: -1, id: id_card });
     setCall(!call);
     message.success("Hủy đặt hàng thành công");
   };
   const OrderCall = async (id_card) => {
-    const res = await orderService.updateStatus({ status: 0, id: id_card });
+    await orderService.updateStatus({ status: 0, id: id_card });
     setCall(!call);
     message.success(" Đặt lại hàng thành công");
   };
-  const handelDelete = async () => {
-    try {
-      const res = await orderService.deleteOrder({ id: id_card });
-      message.success("Xóa thành công");
-      setCall(!call);
-    } catch (error) {
-      message.error("Xoá thất bại");
-    }
-  };
 
-  function deleteCart(id_card) {
-    Modal.confirm({
-      title: "Bạn có chắc chắn xóa những giỏ hàng này không ?.",
-      icon: <ExclamationCircleOutlined />,
-      width: 500,
-      okText: "tiếp tục",
-      cancelText: "hủy",
-      onOk: { handelDelete },
-      onCancel() {
-        console.log("Cancel");
-      },
-    });
-  }
   return (
     <div className="group-info-buy-cart">
       <div className="group-sum-total " style={{ marginRight: 14 }}>
@@ -64,15 +40,6 @@ export default function CartInForBuy({ id_card, data, call, setCall }) {
           </p>
         </h5>
         <div className="button-more-info">
-          {/* <Button
-            type="primary"
-            className="btn-cancel-order-call"
-            onClick={() => {
-              deleteCart(id_card);
-            }}
-          >
-            <DeleteOutlined /> Xóa giỏ hàng
-          </Button> */}
           {data.status_order === -1 && (
             <Button
               type="primary"
@@ -143,8 +110,8 @@ export default function CartInForBuy({ id_card, data, call, setCall }) {
           <div className="group-time-modal">
             <span>Ngày Đặt Hàng:</span>
             <p>
-              {`${moment(data.createAt).fromNow()}, ${moment(
-                data.createAt
+              {`${moment(data.createdAt).fromNow()}, ${moment(
+                data.createdAt
               ).format("LLLL")}`}
             </p>
           </div>

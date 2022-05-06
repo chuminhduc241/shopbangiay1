@@ -18,6 +18,8 @@ const newComment = mongoose.Schema(
     ],
     editComment: { type: Boolean, required: false },
   },
-  { timestamps: true }
+  {
+    timestamps: true,
+  }
 );
 module.exports = mongoose.model("Comment", newComment);

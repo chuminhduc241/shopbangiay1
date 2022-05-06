@@ -8,7 +8,6 @@ import "./style.scss";
 export default function ResetPassword() {
   const [form] = Form.useForm();
   const [loading, setLoading] = useState(false);
-  const userServices = new UserServices();
   const { token } = useParams();
   console.log(token);
   const forgotPassword = async (value) => {

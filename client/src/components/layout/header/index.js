@@ -1,17 +1,11 @@
-import React, { useEffect, useRef, useState } from "react";
-import InforUser from "./inforUser";
+import { AlignLeftOutlined } from "@ant-design/icons";
+import React from "react";
 import { Link } from "react-router-dom";
-import "./style.scss";
-import { useSelector } from "react-redux";
-import { AlignLeftOutlined, UserOutlined } from "@ant-design/icons";
-import Search from "./search/Search";
 import Cart from "./cart/Cart";
-import { Button } from "antd";
 import User from "./inforUser/User";
+import Search from "./search/Search";
+import "./style.scss";
 const Header = ({ setOpenMenu }) => {
-  const user = useSelector((state) => state.auth);
-  const { isLogged } = user;
-  const [openUser, setOpenUser] = useState(false);
   return (
     <>
       <div className="ground-header">

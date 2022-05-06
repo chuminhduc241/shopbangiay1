@@ -10,7 +10,7 @@ const CommentCard = ({ comment, children }) => {
     <div>
       <div className="item-comment">
         <div className="avatar-author">
-          <img src={comment?.id_user.avatar} alt="" />
+          <img src={comment?.id_user?.avatar} alt="" />
         </div>
         <div className="content-author">
           <div className="ground-content-name-start">
@@ -27,9 +27,9 @@ const CommentCard = ({ comment, children }) => {
               <div className="time-content">
                 <Tooltip
                   placement="topLeft"
-                  title={moment(comment?.createAt).format("LLLL")}
+                  title={moment(comment?.createdAt).format("LLLL")}
                 >
-                  <span>{moment(comment?.createAt).fromNow()}</span>
+                  <span>{moment(comment?.createdAt).fromNow()}</span>
                 </Tooltip>
                 {comment?.editComment && (
                   <span className="edit">(đã chỉnh sửa)</span>

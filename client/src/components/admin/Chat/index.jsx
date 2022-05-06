@@ -6,7 +6,6 @@ import { useSelector } from "react-redux";
 import { DataContext } from "DataProvider";
 import { ConversationService } from "services/conversation-service";
 import { MessagesService } from "services/message-Service";
-import { io } from "socket.io-client";
 
 export default function Chat() {
   const [conversations, setConversations] = useState([]);
@@ -22,7 +21,7 @@ export default function Chat() {
   const conversationService = new ConversationService();
   const messagesService = new MessagesService();
   useEffect(() => {
-    socket.on("toAdmin", (data) => {
+    socket?.on("toAdmin", (data) => {
       setArrivalMessage({
         sender: data.senderId,
         text: data.text,
@@ -37,9 +36,8 @@ export default function Chat() {
   }, [arrivalMessage]);
 
   useEffect(() => {
-    socket.emit("addUser", user._id);
+    socket?.emit("addUser", user._id);
   }, [socket, user]);
-  console.log(conversations);
 
   useEffect(() => {
     const getConversations = async () => {

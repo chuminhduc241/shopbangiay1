@@ -1,4 +1,5 @@
 const Comments = require("../models/Comment");
+const Product = require("../models/Product");
 
 class APIfeatures {
   constructor(query, queryString) {
@@ -40,6 +41,50 @@ const commentCtrl = {
     } catch (err) {
       return res.status(500).json({ msg: err.message });
     }
+  },
+  getStarComment: async (req, res) => {
+    const oneStarsResult = await Comments.find({
+      id_product: req.params.id,
+      rating: 1,
+    });
+    const twoStarsResult = await Comments.find({
+      id_product: req.params.id,
+      rating: 2,
+    });
+    const threeStarsResult = await Comments.find({
+      id_product: req.params.id,
+      rating: 3,
+    });
+    const fourStarsResult = await Comments.find({
+      id_product: req.params.id,
+      rating: 4,
+    });
+    const fiveStarsResult = await Comments.find({
+      id_product: req.params.id,
+      rating: 5,
+    });
+    const sumStarRating =
+      oneStarsResult.length +
+      twoStarsResult.length +
+      threeStarsResult.length +
+      fourStarsResult.length +
+      fiveStarsResult.length;
+    const tba = await Product.findOne({
+      _id: req.params.id,
+    });
+
+    const m = Math.ceil(tba.ratings / tba.numOfReviews);
+
+    const starRating = {
+      oneStars: oneStarsResult.length,
+      twoStars: twoStarsResult.length,
+      threeStars: threeStarsResult.length,
+      fourStars: fourStarsResult.length,
+      fiveStart: fiveStarsResult.length,
+      tb: m,
+      sum: sumStarRating,
+    };
+    res.status(200).json({ msg: starRating });
   },
 };
 

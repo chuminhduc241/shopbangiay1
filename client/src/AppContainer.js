@@ -8,7 +8,6 @@ const AppContainer = (props) => {
   const token = localStorage.getItem(LOCAL_STORAGE.ACCESS_TOKEN);
   const userServices = new UserServices();
   useEffect(() => {
-    console.log(token);
     if (token) {
       dispatch(loginSuccess());
       const getInfor = async () => {
