@@ -6,14 +6,17 @@ import { useSelector } from "react-redux";
 import { DataContext } from "DataProvider";
 import { ConversationService } from "services/conversation-service";
 import { MessagesService } from "services/message-Service";
+import { UserServices } from "services/user-service";
 
 export default function Chat() {
   const [conversations, setConversations] = useState([]);
+  const [call, setCall] = useState(false);
   const [currentChat, setCurrentChat] = useState(null);
   const [messages, setMessages] = useState([]);
   const [newMessage, setNewMessage] = useState("");
   const [arrivalMessage, setArrivalMessage] = useState(null);
-
+  const userService = new UserServices();
+  const [khachhang, setKhachhang] = useState();
   const { user } = useSelector((state) => state.auth);
   const { socket } = useContext(DataContext);
   console.log(socket);
@@ -21,15 +24,32 @@ export default function Chat() {
   const conversationService = new ConversationService();
   const messagesService = new MessagesService();
   useEffect(() => {
+    const getUser = async () => {
+      try {
+        const res = await userService.getInfor({ id: currentChat.id_user });
+        setKhachhang(res);
+      } catch (err) {
+        console.log(err);
+      }
+    };
+    if (currentChat) {
+      getUser();
+    }
+  }, [currentChat]);
+  useEffect(() => {
     socket?.on("toAdmin", (data) => {
-      setArrivalMessage({
-        sender: data.senderId,
-        text: data.text,
-        createdAt: Date.now(),
-      });
+      console.log(data.senderId);
+      console.log(khachhang);
+      if (data.senderId === khachhang._id) {
+        setArrivalMessage({
+          sender: data.senderId,
+          text: data.text,
+          createdAt: Date.now(),
+        });
+      }
     });
     return () => socket?.off("toAdmin");
-  }, [socket]);
+  }, [socket, khachhang]);
 
   useEffect(() => {
     arrivalMessage && setMessages((prev) => [...prev, arrivalMessage]);
@@ -49,7 +69,7 @@ export default function Chat() {
       }
     };
     getConversations();
-  }, []);
+  }, [call]);
 
   useEffect(() => {
     const getMessages = async () => {
@@ -65,6 +85,9 @@ export default function Chat() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    if (newMessage === "") {
+      return;
+    }
     const message = {
       sender: "admin",
       text: newMessage,
@@ -91,32 +114,51 @@ export default function Chat() {
   useEffect(() => {
     scrollRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [messages]);
-
   return (
     <>
       <div className="messenger">
         <div className="chatMenu">
           <div className="chatMenuWrapper">
             <div className="search-chat">
-            <input placeholder="Search for friends" className="chatMenuInput" />
-            <button><i className="fa-solid fa-magnifying-glass"></i></button>
+              <input
+                placeholder="Search for friends"
+                className="chatMenuInput"
+              />
+              <button>
+                <i className="fa-solid fa-magnifying-glass"></i>
+              </button>
             </div>
             {conversations?.map((c) => (
               <div onClick={() => setCurrentChat(c)}>
-                <Conversation conversation={c} currentUser={user} />
+                {console.log({ c, currentChat })}
+                <Conversation
+                  call={call}
+                  setCall={setCall}
+                  conversation={c}
+                  highline={c?._id === currentChat?._id}
+                  currentUser={user}
+                  setCurrentChat={setCurrentChat}
+                  setKhachhang={setKhachhang}
+                />
               </div>
             ))}
           </div>
         </div>
         <div className="chatBox">
-          <div className="title">HỖ trợ khách hang</div>
+          <div className="title">
+            {khachhang ? khachhang.name : "Hỗ trợ khách hàng"}
+          </div>
           <div className="chatBoxWrapper">
             {currentChat ? (
               <>
                 <div className="chatBoxTop">
                   {messages?.map((m) => (
                     <div ref={scrollRef}>
-                      <Message message={m} own={m.sender === "admin"} />
+                      <Message
+                        message={m}
+                        own={m.sender === "admin"}
+                        khachhang={khachhang}
+                      />
                     </div>
                   ))}
                 </div>
@@ -128,13 +170,13 @@ export default function Chat() {
                     value={newMessage}
                   ></input>
                   <button className="chatSubmitButton" onClick={handleSubmit}>
-                    Send
+                    Gửi
                   </button>
                 </div>
               </>
             ) : (
               <span className="noConversationText">
-                Open a conversation to start a chat.
+                Mở một cuộc hội thoại để thực hiện chát
               </span>
             )}
           </div>

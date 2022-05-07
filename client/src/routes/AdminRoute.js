@@ -8,7 +8,7 @@ const AdminRoute = (props) => {
   const { user } = useSelector((state) => state.auth);
   return (
     <>
-      {user.role === 1 ? (
+      {user?.role === 1 ? (
         <LayoutAdmin>
           <Route {...props} />
         </LayoutAdmin>

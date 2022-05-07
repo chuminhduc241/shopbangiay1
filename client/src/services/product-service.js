@@ -19,10 +19,18 @@ export class ProductService extends ServiceBase {
     return await this.patch(`/review/${id}`, { ratings });
   };
   getProductAdmin = async (params) => {
-    const { limit, page } = params;
-    return await this.get(`/getProducts?limit=${limit}&page=${page}`);
+    const { limit, page, name } = params;
+    return await this.get(
+      `/getProducts?name[regex]=${name}&limit=${limit}&page=${page}`
+    );
   };
-
+  getAllComments = async (params) => {
+    return await this.get(`/getComments?limit=${100000000}`);
+  };
+  updateComment = async (params) => {
+    const { id } = params;
+    return await this.put(`/updateComment/${id}`);
+  };
   getComments = async (params) => {
     const { product_id, page, limit } = params;
     const total = page * limit;

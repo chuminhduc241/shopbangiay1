@@ -1,4 +1,5 @@
 const User = require("../models/userModel");
+const Comments = require("../models/Comment");
 const sendEmail = require("./sendMail");
 const bcrypt = require("bcrypt");
 const mongoose = require("mongoose");
@@ -233,6 +234,7 @@ const userCtrl = {
   },
   deleteUser: async (req, res) => {
     try {
+      await Comments.find({ id_user: req.params.id }).remove().exec();
       await User.findByIdAndDelete(req.params.id);
       res.json({ msg: "Deleted Successfully" });
     } catch (err) {

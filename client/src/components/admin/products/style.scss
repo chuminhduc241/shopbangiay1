@@ -15,4 +15,9 @@
     margin-bottom: 16px;
     text-align: right;
   }
+  .admin-title {
+    display: flex;
+    justify-content: space-between;
+    flex-direction: row-reverse;
+  }
 }

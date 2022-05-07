@@ -2,6 +2,7 @@ import ListProduct from "components/admin/Cart";
 import Category from "components/admin/category";
 import AddCategory from "components/admin/category/NewCategory";
 import Chat from "components/admin/Chat";
+import Comment from "components/admin/Comment";
 import Products from "components/admin/products";
 import NewProduct from "components/admin/products/NewProduct";
 import User from "components/admin/user";
@@ -35,6 +36,7 @@ const AppRoutesComponent = () => {
         <AdminRoute path="/admin/product" component={Products} />
         {/* <AdminRoute path="/admin" component={Products} /> */}
         <AdminRoute path="/admin/user" component={User} />
+        <AdminRoute path="/admin/comments" component={Comment} />
         <AdminRoute path="/admin/chat" component={Chat} />
         <AdminRoute path="/admin/order" component={ListProduct} />
         <AdminRoute path="/admin/category" component={Category} />

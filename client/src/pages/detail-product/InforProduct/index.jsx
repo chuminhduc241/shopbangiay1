@@ -8,7 +8,6 @@ import { useDispatch } from "react-redux";
 import "./style.scss";
 
 export default function InForProduct({ product }) {
-  //state
   const SlickArrowLeft = ({ currentSlide, slideCount, ...props }) => (
     <button
       {...props}

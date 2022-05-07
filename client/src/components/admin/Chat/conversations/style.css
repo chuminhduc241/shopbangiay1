@@ -1,6 +1,7 @@
 .conversation {
   display: flex;
   align-items: center;
+  justify-content: space-between;
   padding: 10px;
   cursor: pointer;
   margin: 10px 0;
@@ -9,6 +10,10 @@
 }
 
 .conversation:hover {
+  background-color: #f0f0f0 !important;
+  border-radius: 10px;
+}
+.hig{
   background-color: #f0f0f0 !important;
   border-radius: 10px;
 }

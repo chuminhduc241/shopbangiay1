@@ -12,4 +12,8 @@ export class ConversationService extends ServiceBase {
     const { id } = params;
     return await this.get(`/conversations/${id}`);
   };
+  deleteConversation = async (params) => {
+    const { id } = params;
+    return await this.delete(`/conversations/deleteConversation/${id}`);
+  };
 }

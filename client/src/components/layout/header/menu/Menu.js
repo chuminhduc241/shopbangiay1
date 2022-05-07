@@ -31,7 +31,11 @@ export default function Menu({ openMenu, setOpenMenu }) {
           <ul className="menu">
             {user?.role === 1 ? (
               <li style={{ "--i": "1" }}>
-                <Link to="/admin" className="active" onClick={onClickCloseMenu}>
+                <Link
+                  to="/admin/product"
+                  className="active"
+                  onClick={onClickCloseMenu}
+                >
                   Admin
                 </Link>
               </li>

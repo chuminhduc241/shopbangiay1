@@ -1,5 +1,6 @@
 const router = require("express").Router();
 const Conversation = require("../models/Conversation");
+const Message = require("../models/Message");
 
 //new conv
 
@@ -22,6 +23,15 @@ router.get("/getAll", async (req, res) => {
   try {
     const conversation = await Conversation.find();
     res.status(200).json(conversation);
+  } catch (err) {
+    res.status(500).json(err);
+  }
+});
+router.delete("/deleteConversation/:id", async (req, res) => {
+  try {
+    await Conversation.findByIdAndDelete(req.params.id);
+    await Message.find({ conversationId: req.params.id }).remove().exec();
+    res.status(200).json({ status: "deleted" });
   } catch (err) {
     res.status(500).json(err);
   }

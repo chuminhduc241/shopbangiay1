@@ -39,7 +39,6 @@
   overflow-y: scroll;
   padding-right: 10px;
 }
-
 .chatBoxBottom {
   margin-top: 5px;
   display: flex;
@@ -104,9 +103,10 @@
 .noConversationText {
   position: absolute;
   top: 10%;
-  font-size: 50px;
+  font-size: 30px;
   color: rgb(224, 220, 220);
   cursor: default;
+  text-align: center;
 }
 
 @media screen and (max-width: 768px) {

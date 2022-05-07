@@ -1,10 +1,19 @@
-import { Button, Image, message, Popconfirm, Space, Table, Tag } from "antd";
+import {
+  Button,
+  Image,
+  Input,
+  message,
+  Popconfirm,
+  Space,
+  Table,
+  Tag,
+} from "antd";
 import React, { useEffect, useState } from "react";
 import { ProductService } from "services/product-service";
 import EditProduct from "./EditProduct";
 import NewProduct from "./NewProduct";
 import "./style.scss";
-
+const { Search } = Input;
 const Products = () => {
   const [data, setData] = useState([]);
   const [limit, setLimit] = useState(100000);
@@ -15,13 +24,22 @@ const Products = () => {
   const [isNewProduct, setIsNewProduct] = useState(false);
   const productService = new ProductService();
   const formatter = new Intl.NumberFormat("vn");
+  const [search, setSeach] = useState("");
   const getProduct = async () => {
-    const res = await productService.getProductAdmin({ page, limit });
-    setData(res);
+    let res = await productService.getProductAdmin({
+      page,
+      limit,
+      name: search,
+    });
+    console.log(res);
+    const result = res?.products?.map((item) => {
+      return { ...item, key: item._id };
+    });
+    setData(result);
   };
   useEffect(() => {
     getProduct();
-  }, [limit, page, call]);
+  }, [limit, page, call, search]);
   const handleEdit = (product) => {
     setProduct(product);
     setEdit(true);
@@ -58,7 +76,7 @@ const Products = () => {
       title: "Kích cỡ",
       dataIndex: "size",
       key: "size",
-      render: (size) => size.map((s) => <span>{s} </span>),
+      render: (size) => size.map((s) => <span key={s}>{s} </span>),
     },
     {
       title: "Màu sắc",
@@ -67,7 +85,9 @@ const Products = () => {
       render: (color) => (
         <>
           {color.map((c) => (
-            <Tag color={"green"}>{c.toUpperCase()}</Tag>
+            <Tag key={c} color={"green"}>
+              {c.toUpperCase()}
+            </Tag>
           ))}
         </>
       ),
@@ -85,7 +105,7 @@ const Products = () => {
       render: (images) => (
         <div className="product-imgs">
           {images.map((c) => (
-            <Image src={c.url} alt={c.public_id} />
+            <Image key={c.public_id} src={c.url} alt={c.public_id} />
           ))}
         </div>
       ),
@@ -109,10 +129,22 @@ const Products = () => {
       ),
     },
   ];
+  const handleSearch = (e) => {
+    setSeach(e.target.value);
+  };
   return (
     <div className="Product-admin">
       <div className="admin-title" style={{ display: "flex" }}>
-        <div>Sản phẩm</div>
+        <div>
+          <Search
+            placeholder="nhập tên sản phẩm cần tìm kiến"
+            onChange={(e) => handleSearch(e)}
+            size="large"
+            value={search}
+            allowClear
+            enterButton
+          />
+        </div>
         <Button
           type="primary"
           className="addproduct"
@@ -124,7 +156,7 @@ const Products = () => {
         </Button>
       </div>
 
-      <Table columns={columns} dataSource={data?.products} />
+      <Table columns={columns} dataSource={data && data} />
 
       {isNewProduct && (
         <NewProduct

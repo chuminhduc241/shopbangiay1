@@ -20,10 +20,33 @@ class APIfeatures {
 }
 
 const commentCtrl = {
+  getAllComments: async (req, res) => {
+    try {
+      const features = new APIfeatures(
+        Comments.find()
+          .populate("id_user")
+          .populate("reply.id_user")
+          .populate("id_product"),
+        req.query
+      )
+        .sorting()
+        .paginating();
+
+      const comments = await features.query;
+      res.json({
+        status: "success",
+        result: comments.length,
+        comments,
+      });
+    } catch (err) {
+      return res.status(500).json({ msg: err.message });
+    }
+  },
+
   getComments: async (req, res) => {
     try {
       const features = new APIfeatures(
-        Comments.find({ id_product: req.params.id })
+        Comments.find({ id_product: req.params.id, status: true })
           .populate("id_user")
           .populate("reply.id_user"),
         req.query
@@ -37,6 +60,22 @@ const commentCtrl = {
         status: "success",
         result: comments.length,
         comments,
+      });
+    } catch (err) {
+      return res.status(500).json({ msg: err.message });
+    }
+  },
+  updateStatus: async (req, res) => {
+    try {
+      const features = await Comments.findOne({ _id: req.params.id });
+      let active = features.status;
+      const resa = await Comments.findByIdAndUpdate(req.params.id, {
+        status: !active,
+      });
+      console.log(!active);
+      console.log(resa);
+      res.json({
+        status: "success",
       });
     } catch (err) {
       return res.status(500).json({ msg: err.message });

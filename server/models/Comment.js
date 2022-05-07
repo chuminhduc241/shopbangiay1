@@ -2,7 +2,7 @@ const mongoose = require("mongoose");
 const { Schema } = mongoose;
 const newComment = mongoose.Schema(
   {
-    id_product: { type: String, required: true },
+    id_product: { type: String, ref: "Product" },
     id_user: { type: Schema.Types.ObjectId, ref: "user" },
     content: { type: String, required: true },
     rating: {
@@ -17,6 +17,7 @@ const newComment = mongoose.Schema(
       },
     ],
     editComment: { type: Boolean, required: false },
+    status: { type: Boolean, default: true },
   },
   {
     timestamps: true,

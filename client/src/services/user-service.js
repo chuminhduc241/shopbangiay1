@@ -25,4 +25,12 @@ export class UserServices extends ServiceBase {
   getAllInfor = async (params) => {
     return this.get(`/auth/all_infor`);
   };
+  updateRole = async (params) => {
+    const { id, role } = params;
+    return this.post(`/auth/update_role/${id}`, { role });
+  };
+  deleteUser = async (params) => {
+    const { id } = params;
+    return this.delete(`/auth//delete/${id}`);
+  };
 }

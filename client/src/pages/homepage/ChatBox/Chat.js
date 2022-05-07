@@ -8,7 +8,7 @@ import { ConversationService } from "services/conversation-service";
 import { MessagesService } from "services/message-Service";
 import "./Chat.scss";
 import Message from "./message";
-const Chat = () => {
+const Chat = ({ setTonggle }) => {
   const [messages, setMessages] = useState([]);
   const [newMessage, setNewMessage] = useState("");
   const [arrivalMessage, setArrivalMessage] = useState(null);
@@ -71,6 +71,9 @@ const Chat = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    if (newMessage === "") {
+      return;
+    }
     const message = {
       sender: user._id,
       text: newMessage,
@@ -101,7 +104,10 @@ const Chat = () => {
       <div className="Chatbox">
         <div className="chatbox-title">
           <div>Hỗ trợ</div>
-          <i className="fa-solid fa-xmark"></i>
+          <i
+            className="fa-solid fa-xmark"
+            onClick={() => setTonggle(false)}
+          ></i>
         </div>
 
         {
@@ -121,12 +127,14 @@ const Chat = () => {
               <TextArea
                 placeholder="enter..."
                 autoSize
-                style={{height:'20px',focus:"none"}}
+                style={{ height: "20px", focus: "none" }}
                 onChange={(e) => setNewMessage(e.target.value)}
                 value={newMessage}
               />
               <button className="button-send" onClick={handleSubmit}>
-              <SendOutlined style={{fontSize:"20px", color: 'rgb(76, 35, 198)'}} />
+                <SendOutlined
+                  style={{ fontSize: "20px", color: "rgb(76, 35, 198)" }}
+                />
               </button>
             </div>
           </>

@@ -1,13 +1,21 @@
 import "./style.css";
-
-export default function Message({ message, own }) {
+import moment from "moment";
+import "moment/locale/vi";
+moment.locale("vi");
+export default function Message({ message, own, khachhang }) {
   return (
     <div className={own ? "message own" : "message"}>
+      <div className="messageBottom">
+        {moment(message.createdAt).format("LT")}
+      </div>
       <div className="messageTop">
-        <img className={own? "noneImg": "messageImg"} src="https://joeschmoe.io/api/v1/random" alt="img" />
+        <img
+          className={own ? "noneImg" : "messageImg"}
+          src={khachhang?.avatar}
+          alt="img"
+        />
         <p className="messageText">{message.text}</p>
       </div>
-      <div className="messageBottom">{message.createdAt}</div>
     </div>
   );
 }

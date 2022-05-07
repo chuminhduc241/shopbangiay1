@@ -1,4 +1,18 @@
-import { Image, message, Popconfirm, Space, Table } from "antd";
+import {
+  CheckCircleOutlined,
+  DeleteFilled,
+  ExclamationCircleOutlined,
+} from "@ant-design/icons";
+import {
+  Image,
+  message,
+  Modal,
+  Popconfirm,
+  Space,
+  Switch,
+  Table,
+  Tag,
+} from "antd";
 import Loading from "pages/LoadingPage";
 import React, { useEffect, useState } from "react";
 import { UserServices } from "services/user-service";
@@ -6,7 +20,37 @@ import { UserServices } from "services/user-service";
 const User = () => {
   const [data, setData] = useState();
   const [call, setCall] = useState();
-
+  const userService = new UserServices();
+  const [loading, setLoading] = useState(false);
+  const deleteCart = (user) => {
+    Modal.confirm({
+      title: "Bạn có chắc chắn xóa tài khoản này không ?.",
+      icon: <ExclamationCircleOutlined />,
+      width: 500,
+      okText: "tiếp tục",
+      cancelText: "hủy",
+      onOk() {
+        const deleteuser = async () => {
+          await userService.deleteUser({ id: user._id });
+          console.log(user._id);
+          setCall(!call);
+          message.success("Xóa đơn hàng thành công");
+        };
+        deleteuser();
+      },
+      onCancel() {
+        console.log("Cancel");
+      },
+    });
+  };
+  const onChangeAdmin = async (value) => {
+    console.log(value);
+    let a = 0;
+    if (value.role === 0) {
+      a = 1;
+    }
+    await userService.updateRole({ id: value._id, role: a });
+  };
   const columns = [
     {
       title: "Họ tên",
@@ -40,34 +84,43 @@ const User = () => {
       key: "address",
     },
     {
-      title: "Trạng thái",
-      dataIndex: "role",
-      key: "role",
-      render: (record) => {
-        return <div>{record === 1 ? "Admin" : "khách hàng"}</div>;
+      title: "Quyền quản trị",
+      key: "action",
+      render: (text, record) => {
+        console.log(record);
+
+        if (record.email === "chuminhduc2410@gmail.com") {
+          return <Tag color="success">Admin</Tag>;
+        } else {
+          return (
+            <Switch
+              defaultChecked={record.role === 1}
+              onChange={() => onChangeAdmin(record)}
+            />
+          );
+        }
       },
     },
     {
-      title: "Action",
+      title: "Xóa",
+      key: "delete",
       key: "action",
-      render: (text, record) => (
-        <Space size="middle">
-          <a>Sửa</a>
-          <Popconfirm
-            title="Bạn có chắc chắn muốn xóa ?"
-            okText="Xóa"
-            cancelText="Hủy"
-            placement="topRight"
-            onConfirm={() => confirm(record)}
-          >
-            <a href="#">Xóa</a>
-          </Popconfirm>
-        </Space>
-      ),
+      render: (record) => {
+        if (record.email === "chuminhduc2410@gmail.com") {
+          return <Tag color="success">Admin</Tag>;
+        } else {
+          return (
+            <DeleteFilled
+              onClick={() => deleteCart(record)}
+              style={{ fontSize: 20, color: "red", cursor: "pointer" }}
+            />
+          );
+        }
+        // return <div>{record === 1 ? "Admin" : "khách hàng"}</div>;
+      },
     },
   ];
-  const userService = new UserServices();
-  const [loading, setLoading] = useState(false);
+
   const confirm = async (e) => {
     console.log(e);
     try {
@@ -80,8 +133,10 @@ const User = () => {
   useEffect(() => {
     const getAllUser = async () => {
       setLoading(true);
-      const res = await userService.getAllInfor();
-      console.log(res);
+      let res = await userService.getAllInfor();
+      res = res.map((item) => {
+        return { ...item, key: item._id };
+      });
       setData(res);
     };
     getAllUser();
