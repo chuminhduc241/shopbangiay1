@@ -33,7 +33,7 @@ const AppRoutesComponent = () => {
         <PublicRoute path="/addCate" component={AddCategory} />
         <PublicRoute path="/search" component={Search} />
         <AdminRoute path="/admin/product" component={Products} />
-        <AdminRoute path="/admin" component={Products} />
+        {/* <AdminRoute path="/admin" component={Products} /> */}
         <AdminRoute path="/admin/user" component={User} />
         <AdminRoute path="/admin/chat" component={Chat} />
         <AdminRoute path="/admin/order" component={ListProduct} />
