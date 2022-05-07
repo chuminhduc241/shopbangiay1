@@ -1,4 +1,6 @@
+import { SendOutlined } from "@ant-design/icons";
 import { Button } from "antd";
+import TextArea from "antd/lib/input/TextArea";
 import { DataContext } from "DataProvider";
 import React, { useContext, useEffect, useRef, useState } from "react";
 import { useSelector } from "react-redux";
@@ -99,6 +101,7 @@ const Chat = () => {
       <div className="Chatbox">
         <div className="chatbox-title">
           <div>Hỗ trợ</div>
+          <i className="fa-solid fa-xmark"></i>
         </div>
 
         {
@@ -115,15 +118,16 @@ const Chat = () => {
               ))}
             </div>
             <div className="chatBox2">
-              <textarea
-                className="text"
-                placeholder="write something..."
+              <TextArea
+                placeholder="enter..."
+                autoSize
+                style={{height:'20px',focus:"none"}}
                 onChange={(e) => setNewMessage(e.target.value)}
                 value={newMessage}
-              ></textarea>
-              <Button type="primary" className="" onClick={handleSubmit}>
-                Gửi
-              </Button>
+              />
+              <button className="button-send" onClick={handleSubmit}>
+              <SendOutlined style={{fontSize:"20px", color: 'rgb(76, 35, 198)'}} />
+              </button>
             </div>
           </>
         }

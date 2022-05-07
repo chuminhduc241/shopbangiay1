@@ -97,7 +97,10 @@ export default function Chat() {
       <div className="messenger">
         <div className="chatMenu">
           <div className="chatMenuWrapper">
+            <div className="search-chat">
             <input placeholder="Search for friends" className="chatMenuInput" />
+            <button><i className="fa-solid fa-magnifying-glass"></i></button>
+            </div>
             {conversations?.map((c) => (
               <div onClick={() => setCurrentChat(c)}>
                 <Conversation conversation={c} currentUser={user} />
@@ -106,6 +109,7 @@ export default function Chat() {
           </div>
         </div>
         <div className="chatBox">
+          <div className="title">HỖ trợ khách hang</div>
           <div className="chatBoxWrapper">
             {currentChat ? (
               <>
@@ -117,12 +121,12 @@ export default function Chat() {
                   ))}
                 </div>
                 <div className="chatBoxBottom">
-                  <textarea
+                  <input
                     className="chatMessageInput"
                     placeholder="write something..."
                     onChange={(e) => setNewMessage(e.target.value)}
                     value={newMessage}
-                  ></textarea>
+                  ></input>
                   <button className="chatSubmitButton" onClick={handleSubmit}>
                     Send
                   </button>
