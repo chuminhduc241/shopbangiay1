@@ -135,15 +135,15 @@ const EditProduct = ({ edit, setEdit, product, call, setCall }) => {
         <Form
           name="basic"
           initialValues={{
-            ["name"]: product.name,
-            ["sex"]: product.sex,
-            ["category"]: product.category,
-            ["price"]: product.price,
-            ["color"]: product.color,
-            ["description"]: product.description,
-            ["size"]: product.size,
-            ["isdiscount"]: product.isdiscount,
-            ["discount"]: product.discount,
+            name: product.name,
+            gender: product.gender,
+            category: product.category,
+            price: product.price,
+            color: product.color,
+            description: product.description,
+            size: product.size,
+            isdiscount: product.isdiscount,
+            discount: product.discount,
           }}
           labelCol={{ span: 6 }}
           wrapperCol={{ span: 18 }}
@@ -210,7 +210,7 @@ const EditProduct = ({ edit, setEdit, product, call, setCall }) => {
           </Form.Item>
           <Form.Item
             label="Giới tính"
-            name="sex"
+            name="gender"
             rules={[{ required: true, message: "Vui lòng nhập giới tính" }]}
           >
             <Radio.Group>

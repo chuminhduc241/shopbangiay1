@@ -31,7 +31,7 @@ export default function HistoryCart() {
   const showProductsBuyCartAll = (CartData) => {
     return CartData?.map((itemCart, index) => (
       <div className="cart-item-history" key={index}>
-        {itemCart.cart.map((cart, index) => (
+        {itemCart.order_detail.map((cart, index) => (
           <CartItem data={cart} key={index} />
         ))}
         <CartInForBuy
@@ -49,7 +49,7 @@ export default function HistoryCart() {
       (itemCart, index) =>
         itemCart.status_order === 0 && (
           <div className="cart-item-history" key={index}>
-            {itemCart.cart.map((cart, index) => (
+            {itemCart.order_detail.map((cart, index) => (
               <CartItem data={cart} key={index} />
             ))}
             <CartInForBuy
@@ -69,7 +69,7 @@ export default function HistoryCart() {
       (itemCart, index) =>
         itemCart.status_order === 1 && (
           <div className="cart-item-history" key={index}>
-            {itemCart.cart.map((cart, index) => (
+            {itemCart.order_detail.map((cart, index) => (
               <CartItem data={cart} key={index} />
             ))}
             <CartInForBuy
@@ -87,7 +87,7 @@ export default function HistoryCart() {
       (itemCart, index) =>
         itemCart.status_order === 2 && (
           <div className="cart-item-history" key={index}>
-            {itemCart.cart.map((cart, index) => (
+            {itemCart.order_detail.map((cart, index) => (
               <CartItem data={cart} key={index} />
             ))}
             <CartInForBuy
@@ -106,7 +106,7 @@ export default function HistoryCart() {
       (itemCart, index) =>
         itemCart.status_order === -1 && (
           <div className="cart-item-history" key={index}>
-            {itemCart.cart.map((cart, index) => (
+            {itemCart.order_detail.map((cart, index) => (
               <CartItem data={cart} key={index} />
             ))}
             <CartInForBuy

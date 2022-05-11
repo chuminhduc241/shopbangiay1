@@ -46,7 +46,7 @@ export class OrderService extends ServiceBase {
       address,
       phone,
       totalSum,
-      cart,
+      order_detail,
       payment,
       note,
     } = params;
@@ -55,7 +55,7 @@ export class OrderService extends ServiceBase {
       address,
       phone,
       totalSum,
-      cart,
+      order_detail,
       payment,
       note,
       status_order,

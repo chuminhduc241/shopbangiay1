@@ -95,7 +95,7 @@ export default function Chat() {
     };
 
     const receiverId = currentChat.id_user;
-
+    console.log(receiverId);
     socket?.emit("sendMessage", {
       senderId: "admin",
       receiverId: receiverId,

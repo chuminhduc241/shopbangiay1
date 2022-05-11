@@ -190,7 +190,7 @@ const NewProduct = ({ setIsNewProduct, isNewProduct }) => {
           </Form.Item>
           <Form.Item
             label="Giới tính"
-            name="sex"
+            name="gender"
             rules={[{ required: true, message: "Vui lòng nhập giới tính" }]}
           >
             <Radio.Group>

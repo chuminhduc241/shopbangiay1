@@ -79,7 +79,7 @@ const orderCtrl = {
         address,
         phone,
         totalSum,
-        cart,
+        order_detail,
         payment,
         note,
       } = req.body;
@@ -89,7 +89,7 @@ const orderCtrl = {
         address,
         phone,
         totalSum,
-        cart,
+        order_detail,
         payment,
         note,
         status_order,

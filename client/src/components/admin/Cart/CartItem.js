@@ -1,8 +1,8 @@
 import { Link } from "react-router-dom";
 const formatter = new Intl.NumberFormat("vn");
 export default function CartItem({ data }) {
-  const { cart } = data;
-  return cart?.map((items) => (
+  const { order_detail } = data;
+  return order_detail?.map((items) => (
     <div className="group-card-buy-admin" key={items.product._id}>
       <div className="information-cart-admin">
         <div className="group-cart-img-name">

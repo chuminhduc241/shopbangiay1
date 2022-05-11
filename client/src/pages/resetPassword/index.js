@@ -1,10 +1,9 @@
 import { Button, Form, Input, message } from "antd";
 import axios from "axios";
-
 import { useState } from "react";
 import { useParams } from "react-router-dom/cjs/react-router-dom.min";
-import { UserServices } from "services/user-service";
 import "./style.scss";
+
 export default function ResetPassword() {
   const [form] = Form.useForm();
   const [loading, setLoading] = useState(false);

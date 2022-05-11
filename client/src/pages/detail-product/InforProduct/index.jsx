@@ -169,7 +169,7 @@ export default function InForProduct({ product }) {
             <div className="product-content-item">
               <div className="group-product-infor">
                 Giới tính:
-                <span className="group-product-text"> {product?.sex}</span>
+                <span className="group-product-text"> {product?.gender}</span>
               </div>
               <div className="group-product-infor">
                 Màu sắc:

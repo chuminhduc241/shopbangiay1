@@ -21,6 +21,7 @@ const Chat = ({ setTonggle }) => {
   const messagesService = new MessagesService();
   useEffect(() => {
     socket?.on("getMessage", (data) => {
+      console.log(data);
       setArrivalMessage({
         sender: data.senderId,
         text: data.text,

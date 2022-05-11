@@ -7,6 +7,7 @@ const Comments = require("./models/Comment");
 var bodyParser = require("body-parser");
 const conversationRoute = require("./routes/conversations");
 const messageRoute = require("./routes/messages");
+const { use } = require("./routes/conversations");
 const app = express();
 require("./helpers/init_mongoose");
 app.use(express.json({ limit: "16mb" }));
@@ -112,7 +113,8 @@ io.on("connection", (socket) => {
       });
     } else {
       const user = getUser(receiverId);
-
+      console.log(user);
+      console.log(usersChat);
       io.to(user?.socketId).emit("getMessage", {
         senderId,
         text,

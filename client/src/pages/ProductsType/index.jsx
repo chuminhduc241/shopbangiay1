@@ -8,14 +8,21 @@ import { useLocation } from "react-router-dom";
 import useCustomRouter from "hooks/useCustomRouter";
 import Sorting from "./sorting";
 import Loading from "pages/LoadingPage";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  productTyeError,
+  productTyeSuccess,
+  productTypeRequest,
+} from "redux/productTypeSlice";
+import Loading1 from "pages/loading";
 function ProductsType() {
   const [page, setPage] = useState(1);
   const limit = 8;
   const [sort, setSort] = useState("-createdAt");
   const [category, setCategory] = useState();
-  const [loading, setLoading] = useState(false);
+  const producta = useSelector((state) => state.productType);
+  const { error, loading, product: data } = producta;
   const { search } = useLocation();
-  const [data, setData] = useState([]);
   const { pushQuery } = useCustomRouter();
   const totalPages = useMemo(() => {
     if (!data) return 0;
@@ -23,20 +30,23 @@ function ProductsType() {
   }, [data, limit]);
   console.log(totalPages);
   const productService = new ProductService();
-
+  const dispatch = useDispatch();
   const getProductByID = async (page, limit, sort, category) => {
-    const res = await productService.getProductByCategory({
-      page,
-      limit,
-      sort,
-      category,
-    });
-    console.log(res);
-    setData(res);
+    dispatch(productTypeRequest());
+    try {
+      const res = await productService.getProductByCategory({
+        page,
+        limit,
+        sort,
+        category,
+      });
+      dispatch(productTyeSuccess(res));
+    } catch (error) {
+      dispatch(productTyeError());
+    }
   };
   console.log(data);
   useEffect(() => {
-    setLoading(true);
     const page = new URLSearchParams(search).get("page") || 1;
     setPage(page);
     const sort = new URLSearchParams(search).get("sort") || "-createdAt";
@@ -44,7 +54,6 @@ function ProductsType() {
     const category = new URLSearchParams(search).get("category") || "Adidas";
     setCategory(category);
     getProductByID(page, limit, sort, category);
-    setLoading(false);
   }, [search]);
   const formatter = new Intl.NumberFormat("vn");
   const showReview = (rating, numReviews) => {
@@ -122,20 +131,27 @@ function ProductsType() {
             />
           </div>
         </div>
-        {loading && <Loading />}
-        {data?.products?.length === 0 && (
-          <h3 style={{ fontSize: 16, color: "#595959", textAlign: "center" }}>
-            Không có sản phẩm nào .
-          </h3>
-        )}
-        {!loading && data?.products?.length !== 0 && ShowProducts(data)}
-        {!loading && data?.products?.length !== 0 && (
-          <Pagination
-            Current={page}
-            onChange={handleChangePage}
-            total={totalPages * 10}
-            style={{ textAlign: "center" }}
-          />
+        {loading ? (
+          <Loading1 />
+        ) : (
+          <>
+            {data?.products?.length === 0 && (
+              <h3
+                style={{ fontSize: 16, color: "#595959", textAlign: "center" }}
+              >
+                Không có sản phẩm nào .
+              </h3>
+            )}
+            {data?.products?.length !== 0 && ShowProducts(data)}
+            {
+              <Pagination
+                Current={page}
+                onChange={handleChangePage}
+                total={totalPages * 10}
+                style={{ textAlign: "center" }}
+              />
+            }
+          </>
         )}
       </div>
     </>

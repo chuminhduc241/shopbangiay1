@@ -70,7 +70,7 @@ export default function ListProduct() {
                 <CartInForBuy
                   cart={cartItems}
                   userByCart={cartItems.user}
-                  id_cart={cartItems.cart._id}
+                  id_cart={cartItems.order_detail._id}
                   call={call}
                   setCall={setCall}
                 />

@@ -1,13 +1,4 @@
-import {
-  Drawer,
-  Button,
-  Form,
-  Input,
-  Select,
-  InputNumber,
-  message,
-} from "antd";
-
+import { Button, Drawer, Form, Input, message, Select } from "antd";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { removeCart } from "redux/cartSlice";
@@ -82,14 +73,14 @@ export default function CheckOut({ visible, setVisible, dataCart }) {
       address: user.address,
       phone: user.phone,
       totalSum: totalSumCart,
-      cart: dataCart,
+      order_detail: dataCart,
       payment: payment,
       status_order: 0,
       note: note,
       id_user: user?._id,
     };
     try {
-      const res = await orderService.createOrder(cartInformation);
+      await orderService.createOrder(cartInformation);
       dispatch(removeCart());
       setVisible(false);
       message.success("Đặt hàng thành công");
@@ -112,7 +103,7 @@ export default function CheckOut({ visible, setVisible, dataCart }) {
       address: `${incubation} - ${commune} - ${district} - ${city}`,
       phone: numberPhone,
       totalSum: totalSumCart,
-      cart: dataCart,
+      order_detail: dataCart,
       payment: payment,
       status_order: 0,
       note: note,

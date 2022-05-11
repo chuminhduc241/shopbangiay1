@@ -6,7 +6,7 @@ const CartSchema = mongoose.Schema(
     address: { type: String, require },
     phone: { type: String, required: true },
     totalSum: { type: Number, required: true },
-    cart: { type: Array, required: true },
+    order_detail: { type: Array, required: true },
     payment: { type: String, required: true },
     status_order: { type: Number, required: true },
     note: { type: String },
