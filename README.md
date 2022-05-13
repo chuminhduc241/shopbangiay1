@@ -2,13 +2,13 @@
 
 # Công cụ
 
-ReactJS\
-NodeJS\
+ReactJS
+NodeJS
 MongoDB
 
 # Cách chạy
 
-cd server -> npm i -> npm run dev\
+cd server -> npm i -> npm run dev
 cd client -> npm i -> npm start
 
 # Đăng nhập
