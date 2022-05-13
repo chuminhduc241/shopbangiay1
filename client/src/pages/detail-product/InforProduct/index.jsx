@@ -1,6 +1,6 @@
 import { ShoppingCartOutlined } from "@ant-design/icons";
 import { useState } from "react";
-import { Button, Image, Rate } from "antd";
+import { Button, Image, message, Rate } from "antd";
 import Slider from "react-slick";
 import { addCart } from "redux/cartSlice";
 import popup from "components/common/Popup";
@@ -101,7 +101,7 @@ export default function InForProduct({ product }) {
           quantity: soLuong,
         })
       );
-      popup("Giỏ hàng", "Thêm vào giỏ hàng thành công", "success");
+      message.success("Thêm vào giỏ hàng thành công");
     }
   };
   const loadPrice = (product) => {

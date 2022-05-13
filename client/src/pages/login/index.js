@@ -3,18 +3,16 @@ import {
   LockOutlined,
   UserOutlined,
 } from "@ant-design/icons";
-import { Button, Form, Input, Modal } from "antd";
+import { Button, Form, Input, message, Modal } from "antd";
 import popup from "components/common/Popup/index";
 import { LOCAL_STORAGE } from "constants/localstorage";
-import { FastField, Formik } from "formik";
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
-import { useHistory } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import { loginSuccess } from "redux/authSlice";
 import { AuthServices } from "services/auth-service";
+import { UserServices } from "services/user-service";
 import * as Yup from "yup";
-import { Link } from "react-router-dom";
-import InputField from "../register/InputField";
 import "./style.css";
 const formItemLayout = {
   labelCol: {
@@ -66,7 +64,18 @@ const Login = () => {
       popup("Đăng nhập", `${err.response.data.msg}`, "error");
     }
   };
-
+  const userServices = new UserServices();
+  const handleEmail = async (value) => {
+    console.log(value.email);
+    try {
+      await userServices.forgot({ email: value.email });
+      message.success("Vui lòng kiểm tra và xác nhận email");
+      setIsForgetPassword(false);
+    } catch (error) {
+      message.error("Email không tồn tại !");
+      setIsForgetPassword(false);
+    }
+  };
   return (
     <>
       <div className="group-login">
@@ -144,9 +153,7 @@ const Login = () => {
                 </Form.Item>
               </div>
             </Form>
-            <div className="connect-with-internet">
-              <p>Hoặc đăng nhập bằng</p>
-            </div>
+            <div className="connect-with-internet"></div>
             <div className="connect-link">
               <p>Bạn chưa có tài khoản đăng ký </p>
               <Link to="/register" className="btn-register">
@@ -167,7 +174,7 @@ const Login = () => {
         cancelText="Hủy"
         okText="Gửi Email"
         footer={[
-          <Form form={formForget}>
+          <Form form={formForget} onFinish={(e) => handleEmail(e)}>
             <Button key="back" onClick={() => setIsForgetPassword(false)}>
               Hủy
             </Button>

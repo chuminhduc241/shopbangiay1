@@ -7,6 +7,20 @@
     box-sizing: border-box;
     
 }
+.logo-name{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.logo_name{
+    margin:auto;
+    font-size: 22px;
+    font-weight: 600;
+    color: #fff;
+}
+.logo_name:hover{
+    color: #fff;
+}
 
 :root{
     /* ===== Colors ===== */
@@ -30,6 +44,9 @@ body{
     transition: var(--tran-05);
     font-family: "Roboto", sans-serif;
     background-color: #F0f0f0;
+}
+.sidebar1.close .image-text{
+    display: none;
 }
 
 ::selection{
@@ -108,11 +125,15 @@ body.dark{
 
 .sidebar1 header{
     position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .sidebar1 header .image-text{
     display: flex;
     align-items: center;
+    justify-content: center;
 }
 .sidebar1 header .logo-text{
     display: flex;
@@ -168,7 +189,7 @@ body.dark .sidebar1 header .toggle{
 } */
 
 .sidebar1 .menu{
-    margin-top: 40px;
+    margin-top: 10px;
 }
 
 
@@ -292,6 +313,9 @@ body.dark .switch::before{
     color: #76838f;
     text-align: left;
     background-color: #fff;
+    position: fixed;
+    width: 100%;
+    z-index: 10;
 }
 .hom3-header{
     display: flex;
@@ -299,11 +323,16 @@ body.dark .switch::before{
     padding: 0 60px;
     align-items: center;
 }
+.avatar1{
+  position: fixed;
+  right: 10px; 
+}
 .home3 .text{
     /* font-size: 30px; */
     font-weight: 500;
     color: var(--text-color);
     padding: 12px 60px;
+    margin-top: 70px;
 }
 .search-header{
     width: 300px;

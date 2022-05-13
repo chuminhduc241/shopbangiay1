@@ -1,5 +1,7 @@
 import { MessageOutlined } from "@ant-design/icons";
+import { message } from "antd";
 import React, { useEffect, useState } from "react";
+import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 import FormInput from "../formInput/FormInput";
 import CommentCard from "./CommentCard";
 import "./commentCard.scss";
@@ -27,9 +29,15 @@ const CommentItem = ({ comment, user, socket }) => {
 
     loopWithSlice(next);
   }, [comment.reply, next]);
+  const history = useHistory();
   const handleReply = (username) => {
-    setReply(true);
-    setName(username);
+    if (user) {
+      setReply(true);
+      setName(username);
+    } else {
+      message.error("Vui lòng đăng nhập để sử dụng chức năng này");
+      history.push("/login");
+    }
   };
 
   const hideReply = () => {

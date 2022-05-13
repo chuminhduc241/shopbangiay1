@@ -63,22 +63,22 @@ export default function Footer() {
               <ul>
                 <li>
                   <a href="/" target="_blank" rel="noreferrer noopener">
-                    <i className="fa fa-facebook" />
+                    <i className="fa-brands fa-facebook-f"></i>
                   </a>
                 </li>
                 <li>
                   <a href="/" target="_blank" rel="noreferrer noopener">
-                    <i className="fa fa-linkedin" />
+                    <i className="fa-brands fa-linkedin-in"></i>
                   </a>
                 </li>
                 <li>
                   <a href="/" target="_blank" rel="noreferrer noopener">
-                    <i className="fa fa-github" />{" "}
+                    <i className="fa-brands fa-github"></i>
                   </a>
                 </li>
                 <li>
                   <a href="/" target="_blank" rel="noreferrer noopener">
-                    <i className="fa fa-external-link" />
+                    <i className="fa-solid fa-arrow-up-right-from-square"></i>
                   </a>
                 </li>
               </ul>

@@ -139,6 +139,33 @@ const orderCtrl = {
       return res.status(500).json({ msg: err.message });
     }
   },
+  getOrderTT: async (req, res) => {
+    try {
+      console.log(req.body.dateStart);
+      console.log(req.body.dateEnd);
+      const orders = await Orders.find({
+        createdAt: {
+          $gte: new Date(req.body.dateStart),
+          $lte: new Date(req.body.dateEnd),
+        },
+      });
+      console.log(orders);
+
+      let totalAmount = 0;
+
+      orders.forEach((order) => {
+        totalAmount += order.totalSum;
+      });
+
+      res.status(200).json({
+        success: true,
+        totalAmount,
+        orders,
+      });
+    } catch (error) {
+      return res.status(500).json({ msg: err.message });
+    }
+  },
 };
 
 module.exports = orderCtrl;

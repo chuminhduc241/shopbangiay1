@@ -4,6 +4,7 @@ import AddCategory from "components/admin/category/NewCategory";
 import Chat from "components/admin/Chat";
 import Comment from "components/admin/Comment";
 import Products from "components/admin/products";
+import Dashboard from "components/admin/dashboard";
 import NewProduct from "components/admin/products/NewProduct";
 import User from "components/admin/user";
 import { ROUTES } from "constants/routes";
@@ -34,7 +35,7 @@ const AppRoutesComponent = () => {
         <PublicRoute path="/addCate" component={AddCategory} />
         <PublicRoute path="/search" component={Search} />
         <AdminRoute path="/admin/product" component={Products} />
-        {/* <AdminRoute path="/admin" component={Products} /> */}
+        <AdminRoute path="/admin/Dashboard" component={Dashboard} />
         <AdminRoute path="/admin/user" component={User} />
         <AdminRoute path="/admin/comments" component={Comment} />
         <AdminRoute path="/admin/chat" component={Chat} />
@@ -48,7 +49,6 @@ const AppRoutesComponent = () => {
         <PublicRoute path={ROUTES.CART} exact component={CartProduct} />
         <PublicRoute path={ROUTES.LOGIN} component={Login} />
         <PublicRoute path={ROUTES.ACTIVATION} component={ActivationEmail} />
-        <PublicRoute path={ROUTES.REGISTER} component={Register} />
         <PublicRoute path={ROUTES.REGISTER} component={Register} />
         <PublicRoute path="/notfound" component={NotFount} />
         <PublicRoute

@@ -31,6 +31,10 @@ export class UserServices extends ServiceBase {
   };
   deleteUser = async (params) => {
     const { id } = params;
-    return this.delete(`/auth//delete/${id}`);
+    return this.delete(`/auth/delete/${id}`);
+  };
+  forgot = async (params) => {
+    const { email } = params;
+    return this.post(`/auth/forgot`, { email });
   };
 }

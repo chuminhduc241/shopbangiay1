@@ -51,7 +51,7 @@ function ProductsType() {
               <Link to={`/detail/${product._id}`}>
                 <div className="ig-products-type">
                   <LazyLoadImage
-                    effect="blur"
+                    // effect="blur"
                     src={product?.images[0]?.url}
                     alt={product?._id}
                     key={product?._id}

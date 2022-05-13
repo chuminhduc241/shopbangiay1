@@ -28,7 +28,18 @@ const ActivationEmail = () => {
       activationEmail();
     }
   }, [activation_token]);
-  return <div>Tài khoản đã được xác thực có thể đăng nhập được</div>;
+  return (
+    <div
+      style={{
+        fontSize: 24,
+        color: "#4a5568",
+        margin: "100px",
+        textAlign: "center",
+      }}
+    >
+      Tài khoản đã được xác thực có thể đăng nhập được
+    </div>
+  );
 };
 
 export default ActivationEmail;

@@ -32,6 +32,13 @@ export class OrderService extends ServiceBase {
       status,
     });
   };
+  getOrderTT = async (params) => {
+    const { dateStart, dateEnd } = params;
+    return await this.post(`/order/getOrderTT`, {
+      dateStart,
+      dateEnd,
+    });
+  };
   updateMessage = async (params) => {
     const { id, message } = params;
     return await this.put(`/order/updateMessage`, {

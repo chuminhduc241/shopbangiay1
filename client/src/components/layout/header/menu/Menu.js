@@ -32,11 +32,11 @@ export default function Menu({ openMenu, setOpenMenu }) {
             {user?.role === 1 ? (
               <li style={{ "--i": "1" }}>
                 <Link
-                  to="/admin/product"
+                  to="/admin/dashboard"
                   className="active"
                   onClick={onClickCloseMenu}
                 >
-                  Admin
+                  Trang quản trị
                 </Link>
               </li>
             ) : (

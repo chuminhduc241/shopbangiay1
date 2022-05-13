@@ -22,7 +22,6 @@ export default function CartInForBuy({ cart, call, setCall, id_cart }) {
   // function
   const orderService = new OrderService();
 
-  
   const onChangeFromMessage = async () => {
     const dataMessage = {
       id: cart._id,
@@ -43,6 +42,15 @@ export default function CartInForBuy({ cart, call, setCall, id_cart }) {
       message.success("Xác nhận đơn hàng thành công");
     } catch (error) {
       message.error("Xác nhận đơn hàng thất bại");
+    }
+  };
+  const handleGiaoHang = async () => {
+    try {
+      const res = await orderService.updateStatus({ id: cart._id, status: 2 });
+      setCall(!call);
+      message.success("Đơn hàng đã được giao thành công");
+    } catch (error) {
+      message.error("Lỗi");
     }
   };
   const deleteCart = (id_cart) => {
@@ -98,8 +106,13 @@ export default function CartInForBuy({ cart, call, setCall, id_cart }) {
             <Button
               type="primary"
               className="btn-success-order"
-              onClick={() => {}}
+              onClick={handleGiaoHang}
             >
+              <CheckCircleOutlined /> Hoàn thành đơn hàng
+            </Button>
+          )}
+          {cart.status_order === 2 && (
+            <Button type="primary" className="btn-success-order">
               <CheckCircleOutlined /> Đã giao thành công
             </Button>
           )}
@@ -141,7 +154,7 @@ export default function CartInForBuy({ cart, call, setCall, id_cart }) {
               <li>
                 {" "}
                 <span>Tên:</span>
-                <p class="name-user-by-cart">{cart?.id_user?.name}</p>
+                <p className="name-user-by-cart">{cart?.id_user?.name}</p>
               </li>
               <li>
                 {" "}

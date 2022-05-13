@@ -243,15 +243,12 @@ const userCtrl = {
   },
 };
 
-
 const createAccessToken = (payload) => {
-  return jwt.sign(payload, process.env.ACCESS_TOKEN_SECRET, {
-    expiresIn: "10h",
-  });
+  return jwt.sign(payload, process.env.ACCESS_TOKEN_SECRET);
 };
 const createRefreshToken = (payload) => {
   return jwt.sign(payload, process.env.REFRESH_TOKEN_SECRET, {
-    expiresIn: "50m",
+    expiresIn: "10h",
   });
 };
 const createActivationToken = (payload) => {
