@@ -4,12 +4,12 @@
 
 ReactJS\
 NodeJS\
-MongoDB\
+MongoDB
 
 # Cách chạy
 
 cd server -> npm i -> npm run dev\
-cd client -> npm i -> npm start\
+cd client -> npm i -> npm start
 
 # Đăng nhập
 
