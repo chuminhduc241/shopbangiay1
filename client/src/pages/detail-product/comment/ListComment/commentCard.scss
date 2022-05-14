@@ -18,6 +18,12 @@
     padding: 10px;
     .main-item-comment {
       position: relative;
+      .delete-comment{
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        color: #d80707;
+      }
       .group-avatar-logo-name {
         display: inline-block;
         h3 {

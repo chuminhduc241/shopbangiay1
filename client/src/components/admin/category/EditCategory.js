@@ -1,8 +1,8 @@
-import { Button, Form, Input, message, Modal } from "antd";
+import { Button, Col, Form, Input, message, Modal, Row } from "antd";
 import TextArea from "antd/lib/input/TextArea";
 import React, { useEffect, useState } from "react";
 import { CategoryService } from "services/category-service";
-import "./style.scss"
+import "./style.scss";
 const EditCategory = ({ edit, setEdit, category, call, setCall }) => {
   function getBase64(file) {
     console.log("file :", file);
@@ -87,12 +87,25 @@ const EditCategory = ({ edit, setEdit, category, call, setCall }) => {
             <TextArea rows={4} />
           </Form.Item>
         </Form>
-        <div>
-          <input type="file" name="hinhanh" onChange={handleChangeImage} />
-          <div className="preview-cate">
-            {previewImg && <img src={previewImg} alt="" />}
-            {image && <img src={image} alt="" />}
-          </div>
+        <div className="div">
+          <Row>
+            <Col className="ant-col ant-col-6 ant-form-item-label" span={8}>
+              <div className="label-hinhanh">Hình ảnh</div>
+            </Col>
+            <Col span={16}>
+              <div>
+                <input
+                  type="file"
+                  name="hinhanh"
+                  onChange={handleChangeImage}
+                />
+                <div className="preview-cate">
+                  {previewImg && <img src={previewImg} alt="" />}
+                  {image && <img src={image} alt="" />}
+                </div>
+              </div>
+            </Col>
+          </Row>
         </div>
       </Modal>
     </div>

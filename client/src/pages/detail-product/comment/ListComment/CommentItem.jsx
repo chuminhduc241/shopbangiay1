@@ -6,7 +6,7 @@ import FormInput from "../formInput/FormInput";
 import CommentCard from "./CommentCard";
 import "./commentCard.scss";
 let showComments = [];
-const CommentItem = ({ comment, user, socket }) => {
+const CommentItem = ({call ,setCall, comment, user, socket }) => {
   const [reply, setReply] = useState(false);
   const [name, setName] = useState("");
   const [replyComment, setReplyComment] = useState([]);
@@ -45,7 +45,7 @@ const CommentItem = ({ comment, user, socket }) => {
   };
   return (
     <div>
-      <CommentCard comment={comment}>
+      <CommentCard call={call} setCall={setCall} comment={comment}>
         <div className="nav_comment">
           <p
             className="ground-reply"

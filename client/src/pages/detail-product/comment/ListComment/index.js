@@ -8,6 +8,7 @@ export default function ListComment({ socket, user, product_id }) {
   const [dataComment, setDataComment] = useState([]);
   const [loading, setLoading] = useState(false);
   const productService = new ProductService();
+  const [call ,setCall] = useState(true)
   const pageEnd = useRef();
 
   useEffect(() => {
@@ -23,7 +24,7 @@ export default function ListComment({ socket, user, product_id }) {
       setLoading(false);
     };
     getcomment();
-  }, [product_id, page]);
+  }, [product_id, page, call]);
   useEffect(() => {
     if (socket) {
       socket?.on("sendCommentToClient", (msg) => {
@@ -83,6 +84,8 @@ export default function ListComment({ socket, user, product_id }) {
           user={user}
           socket={socket}
           product_id={product_id}
+          call = {call}
+          setCall = {setCall}
         />
       ))}
       {loading && <Spin />}

@@ -1,12 +1,38 @@
-import { Rate, Tooltip } from "antd";
+import { message, Modal, Rate, Tooltip } from "antd";
 import React from "react";
 import moment from "moment";
 import "moment/locale/vi";
+import { useSelector } from "react-redux";
+import { ExclamationCircleOutlined } from "@ant-design/icons";
+import { ProductService } from "services/product-service";
 moment.locale("vi");
-const CommentCard = ({ comment, children }) => {
+const CommentCard = ({ call,setCall, comment, children }) => {
+  const { user } = useSelector((state) => state.auth);
+ const productService = new ProductService()
   const avatarLogo =
     "https://res.cloudinary.com/phuockaito/image/upload/v1618158354/tich-xanh-fanpage-va-quang-cao-livestream-fanpage-tich-xanh_ttn2e7.png";
-  return (
+  const deleteComment = () => {
+    Modal.confirm({
+      title: "Bạn có chắc chắn xóa đánh giá này không ?.",
+      icon: <ExclamationCircleOutlined />,
+      width: 500,
+      okText: "tiếp tục",
+      cancelText: "hủy",
+      onOk() {
+        const deleteuser = async () => {
+          await productService.deleteComment({ id_comment: comment?._id });
+          console.log(user._id);
+          setCall(!call);
+          message.success("Xóa thành công!");
+        };
+        deleteuser();
+      },
+      onCancel() {
+        console.log("Cancel");
+      },
+    });
+  }
+    return (
     <div>
       <div className="item-comment">
         <div className="avatar-author">
@@ -23,6 +49,10 @@ const CommentCard = ({ comment, children }) => {
                   )}
                 </h3>
                 {comment?.id_user?.role === 1 && <p>Quản trị viên</p>}
+                {(comment?.id_user?.role === 1 ||
+                  comment?.id_user?._id === user._id) && (
+                  <i onClick={deleteComment} className="fa-solid fa-x delete-comment"></i>
+                )}
               </div>
               <div className="time-content">
                 <Tooltip

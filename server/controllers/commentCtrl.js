@@ -125,6 +125,39 @@ const commentCtrl = {
     };
     res.status(200).json({ msg: starRating });
   },
+  deleteComment: async (req, res) => {
+    try {
+      const comment = await Comments.findById(req.params.id);
+      const product = await Product.findById(comment.id_product);
+      let num = product.numOfReviews;
+      let rate = product.ratings;
+      let id = product._id;
+      await Product.findOneAndUpdate(
+        { _id: id },
+        {
+          ratings: Number.parseInt(rate) - Number.parseInt(comment.rating),
+          numOfReviews: num - 1,
+        }
+      );
+      const commentDeleteCondition = { _id: req.params.id };
+      const deletedComment = await Comments.findOneAndDelete(
+        commentDeleteCondition
+      );
+
+      if (!deletedComment) {
+        return res.status(401).json({
+          success: false,
+          message: "Comment not found",
+        });
+      }
+      res.json({ success: true });
+    } catch (error) {
+      console.log(error);
+      res
+        .status(500)
+        .json({ success: false, message: "Internal server error" });
+    }
+  },
 };
 
 module.exports = commentCtrl;

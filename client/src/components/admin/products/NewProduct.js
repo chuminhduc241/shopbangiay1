@@ -213,7 +213,9 @@ const NewProduct = ({ setIsNewProduct, isNewProduct }) => {
         </Form>
         <div className="div">
           <Row>
-            <Col span={8}>Hình ảnh</Col>
+            <Col className="ant-col ant-col-6 ant-form-item-label" span={8}>
+              <div className="label-hinhanh">Hình ảnh</div>
+            </Col>
             <Col span={16}>
               <div id="createProductFormFile">
                 <input

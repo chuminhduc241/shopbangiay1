@@ -40,6 +40,10 @@ export class ProductService extends ServiceBase {
     const { id_product } = params;
     return await this.get(`/getStartComments/${id_product}`);
   };
+  deleteComment = async (params) => {
+    const { id_comment } = params;
+    return await this.delete(`/deleteComment/${id_comment}`);
+  };
   getProductById = async (params) => {
     const { id } = params;
     return await this.get(`getProduct/${id}`);
