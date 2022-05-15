@@ -37,7 +37,7 @@ const LayoutAdmin = ({ children }) => {
 
   return (
     <div>
-      <nav className="sidebar1 close">
+      <nav className="sidebar1">
         <header style={{ backgroundColor: "#7571f9", height: 70 }}>
           <div className="image-text">
             <div className="">
