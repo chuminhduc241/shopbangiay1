@@ -2,7 +2,7 @@ const mongoose = require("mongoose");
 const { Schema } = mongoose;
 const newComment = mongoose.Schema(
   {
-    id_product: { type: String, ref: "Product" },
+    id_product: { type: Schema.Types.ObjectId, ref: "Product" },
     id_user: { type: Schema.Types.ObjectId, ref: "user" },
     content: { type: String, required: true },
     rating: {

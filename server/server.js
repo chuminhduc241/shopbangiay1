@@ -79,20 +79,22 @@ io.on("connection", (socket) => {
       if (comment) {
         comment.reply.push({ id_user, content, createdAt });
         await comment.save();
+
         const newcmt = await Comments.findById(comment._id)
           .populate("id_user")
           .populate("reply.id_user");
-        console.log(newcmt);
-        io.to(newcmt.id_product).emit("sendReplyCommentToClient", newcmt);
+
+        io.to(newcmt.id_product.toString()).emit(
+          "sendReplyCommentToClient",
+          newcmt
+        );
       }
     } else {
       await newComment.save();
       const newcmt = await Comments.findById(newComment._id)
         .populate("id_user")
-        .populate("reply.id_user")
-        .populate("id_product");
-      console.log(newcmt);
-      io.to(newcmt.id_product).emit("sendCommentToClient", newcmt);
+        .populate("reply.id_user");
+      io.to(newcmt.id_product.toString()).emit("sendCommentToClient", newcmt);
     }
   });
 
@@ -100,7 +102,6 @@ io.on("connection", (socket) => {
   socket.on("addUser", (userId) => {
     console.log(userId);
     addUser(userId, socket.id);
-    console.log(usersChat);
     io.emit("getUsers", users);
   });
 

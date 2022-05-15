@@ -8,7 +8,7 @@ export default function ListComment({ socket, user, product_id }) {
   const [dataComment, setDataComment] = useState([]);
   const [loading, setLoading] = useState(false);
   const productService = new ProductService();
-  const [call ,setCall] = useState(true)
+  const [call, setCall] = useState(true);
   const pageEnd = useRef();
 
   useEffect(() => {
@@ -50,7 +50,7 @@ export default function ListComment({ socket, user, product_id }) {
 
       return () => socket?.off("sendReplyCommentToClient");
     }
-  }, [socket, dataComment]);
+  }, [socket, dataComment, setDataComment]);
   useEffect(() => {
     const observer = new IntersectionObserver(
       (entries) => {
@@ -84,8 +84,8 @@ export default function ListComment({ socket, user, product_id }) {
           user={user}
           socket={socket}
           product_id={product_id}
-          call = {call}
-          setCall = {setCall}
+          call={call}
+          setCall={setCall}
         />
       ))}
       {loading && <Spin />}

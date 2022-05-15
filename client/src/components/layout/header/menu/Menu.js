@@ -54,11 +54,11 @@ export default function Menu({ openMenu, setOpenMenu }) {
                     style={{ "--i": "2" }}
                   >
                     <Link to={`/product-type/?category=${item.name}`}>
-                      <div className="icon-menu">
+                      <div className="icon-menu" style={{ marginRight: 20 }}>
                         <img src={item.image} alt="logoAdidas" />
                       </div>
                       {item.name}
-                      <i className="fa fa-caret-down" />
+                      {/* <i className="fa fa-caret-down" /> */}
                     </Link>
                   </li>
                 ))

@@ -10,6 +10,7 @@ const DataProvider = ({ children }) => {
     setSocket(socket);
     return () => socket.close();
   }, []);
+  console.log(socket);
   return (
     <DataContext.Provider value={{ socket: socket }}>
       {children}
