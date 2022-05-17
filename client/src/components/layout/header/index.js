@@ -14,7 +14,7 @@ const Header = ({ setOpenMenu }) => {
             <Link to="/">
               {/* <img src="" alt="This logo" /> */}
               <div className="logo2">
-                MĐ <span>Shop</span>
+                MĐ<span>Shop</span>
               </div>
             </Link>
           </div>
