@@ -75,7 +75,7 @@ export default function ListComment({ socket, user, product_id }) {
           paddingLeft: "10px",
         }}
       >
-        Khách hàng nhận xét
+        KHÁCH HÀNG NHẬN XÉT
       </p>
       {dataComment?.map((item) => (
         <CommentItem

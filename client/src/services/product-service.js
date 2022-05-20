@@ -54,6 +54,10 @@ export class ProductService extends ServiceBase {
       `/getProducts?category=${category}&limit=${limit}&page=${page}&sort=${sort}`
     );
   };
+  getLienquan = async (params) => {
+    const { limit, category } = params;
+    return await this.get(`/getProducts?category=${category}&limit=${limit}`);
+  };
   addProduct = async (params) => {
     const image = params.images;
 

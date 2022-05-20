@@ -59,14 +59,14 @@ export default function InForProduct({ product }) {
     if (numReviews > 0) {
       return (
         <>
-          <Rate value={rate} readOnly />
+          <Rate value={rate} disabled />
           <span className="total-review">có {numReviews} Đánh giá</span>
         </>
       );
     } else {
       return (
         <>
-          <Rate value={5} readOnly />
+          <Rate value={5} disabled />
           <span className="total-review">chưa có đánh giá</span>
         </>
       );
@@ -85,6 +85,7 @@ export default function InForProduct({ product }) {
   }, [product]);
   const preNumber = () => {
     const number = Math.max(1, soLuong - 1);
+
     setSoLuong(number);
   };
   console.log(cart);
@@ -345,7 +346,7 @@ export default function InForProduct({ product }) {
         </div>
       </section>
       <div className="group-description" data-aos="fade-down">
-        <h2>Mô tả Sản phẩm</h2>
+        <h2>MÔ TẢ SẢN PHẨM</h2>
         <div className="group-description-text">{product?.description}</div>
       </div>
     </>

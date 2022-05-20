@@ -8,6 +8,7 @@ import Comment from "./comment";
 import InForProduct from "./InforProduct";
 import Loading1 from "pages/loading";
 import Loading from "pages/LoadingPage";
+import Lienquan from "./lienquan";
 
 const DetailProduct = () => {
   const [product, setProduct] = useState();
@@ -83,6 +84,7 @@ const DetailProduct = () => {
         <>
           <InForProduct product={product} />
           <Comment socket={socket} product_id={id} />
+          <Lienquan product={product} />
         </>
       )}
     </div>

@@ -319,7 +319,7 @@ const EditProduct = ({ edit, setEdit, product, call, setCall }) => {
             </div>
           </Col>
         </Row>
-        <div className="div">
+        <div className="div" style={{ marginTop: "20px" }}>
           <Row>
             <Col className="ant-col ant-col-6 ant-form-item-label" span={8}>
               <div className="label-hinhanh">Hình ảnh</div>

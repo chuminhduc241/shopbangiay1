@@ -114,7 +114,7 @@ const Tags = ({ form, initcolor }) => {
       )}
       {!inputVisible && (
         <Tag onClick={showInput} className="">
-          <PlusOutlined /> New Color
+          <PlusOutlined /> Màu mới
         </Tag>
       )}
     </div>
