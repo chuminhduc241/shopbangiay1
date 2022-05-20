@@ -9,6 +9,7 @@ moment.locale("vi");
 const CommentCard = ({ call, setCall, comment, children, type }) => {
   const { user } = useSelector((state) => state.auth);
   const productService = new ProductService();
+  console.log(user);
   const avatarLogo =
     "https://res.cloudinary.com/phuockaito/image/upload/v1618158354/tich-xanh-fanpage-va-quang-cao-livestream-fanpage-tich-xanh_ttn2e7.png";
   const deleteComment = () => {
@@ -49,8 +50,7 @@ const CommentCard = ({ call, setCall, comment, children, type }) => {
                   )}
                 </h3>
                 {comment?.id_user?.role === 1 && <p>Quản trị viên</p>}
-                {(comment?.id_user?.role === 1 ||
-                  comment?.id_user?._id === user._id) &&
+                {(user.role === 1 || comment?.id_user?._id === user._id) &&
                   type !== "reply" && (
                     <i
                       onClick={deleteComment}

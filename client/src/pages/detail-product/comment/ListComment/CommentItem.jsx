@@ -45,7 +45,7 @@ const CommentItem = ({ call, setCall, comment, user, socket }) => {
   };
   return (
     <div>
-      <CommentCard call={call} setCall={setCall} comment={comment}>
+      <CommentCard call={call} setCall={setCall} type="ok" comment={comment}>
         <div className="nav_comment">
           <p
             className="ground-reply"
