@@ -1,4 +1,7 @@
 const Products = require("../models/Product");
+const Orders = require("../models/Order");
+const Users = require("../models/userModel");
+const Category = require("../models/Category");
 const cloudinary = require("cloudinary");
 cloudinary.config({
   cloud_name: process.env.CLOUD_NAME,
@@ -243,6 +246,22 @@ const productCtrl = {
       res.status(500).json({
         msg: error.message,
       });
+    }
+  },
+  thongketsoluong: async (req, res) => {
+    try {
+      const product = await Products.find();
+      const user = await Users.find();
+      const category = await Category.find();
+      const order = await Orders.find({ status_order: 2 });
+      res.json({
+        product: product.length,
+        user: user.length,
+        category: category.length,
+        order: order.length,
+      });
+    } catch (err) {
+      return res.status(500).json({ msg: err.message });
     }
   },
 };

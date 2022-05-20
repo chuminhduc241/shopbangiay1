@@ -25,6 +25,10 @@ export class OrderService extends ServiceBase {
     const { id } = params;
     return await this.get(`/order/${id}`);
   };
+  getNumberThongket = async (params) => {
+    return await this.get(`/getsoluong`);
+  };
+
   updateStatus = async (params) => {
     const { id, status } = params;
     return await this.put(`/order/updateStatus`, {

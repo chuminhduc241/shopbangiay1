@@ -4,6 +4,7 @@ const { authAdmin } = require("../middleware/authAdmin");
 const productCtrl = require("../controllers/productCtrl");
 router.get("/getProducts", productCtrl.getAllProduct);
 router.get("/getProduct/:id", productCtrl.detailProduct);
+router.get("/getsoluong", productCtrl.thongketsoluong);
 router.post("/createProduct", productCtrl.createProduct);
 router.put("/updateProduct/:id", productCtrl.updateProduct);
 router.delete("/deleteProduct/:id", productCtrl.deleteProduct);

@@ -7,17 +7,29 @@ import { TotalRevenue } from "./TotalRevenue";
 import { useDispatch, useSelector } from "react-redux";
 import { OrderError, OrderRequest, OrderSuccess } from "redux/OrderSlice";
 import { AntDesignOutlined } from "@ant-design/icons";
+import { ProductService } from "services/product-service";
 const { RangePicker } = DatePicker;
 const Dashboard = () => {
   const [dateStart, setDateStart] = useState();
   const [dateEnd, setDateEnd] = useState();
+  const [quantity, setQuantity] = useState();
+  const orderService = new OrderService();
   function onChange(dates, dateStrings) {
     console.log("From: ", dates[0], ", to: ", dates[1]);
     console.log("From: ", dateStrings[0], ", to: ", dateStrings[1]);
     setDateStart(dateStrings[0]);
     setDateEnd(dateStrings[1]);
   }
-  const orderService = new OrderService();
+
+  useEffect(() => {
+    const getNumber = async () => {
+      const res = await orderService.getNumberThongket();
+      setQuantity(res);
+      console.log(res);
+    };
+    getNumber();
+  }, []);
+
   const dispatch = useDispatch();
   const handleThongke = async () => {
     let date1 = moment(dateStart, "YYYY-MM-DD");
@@ -52,7 +64,7 @@ const Dashboard = () => {
                   <AntDesignOutlined style={{ fontSize: 22 }} />
                 </div>
                 <div className="content">
-                  <h2 className="number">5</h2>
+                  <h2 className="number">{quantity?.category}</h2>
                   <p className="sub-title">Số lượng thương hiệu</p>
                 </div>
               </div>
@@ -65,8 +77,8 @@ const Dashboard = () => {
                   <i className="fa-solid fa-cart-shopping"></i>
                 </div>
                 <div className="content">
-                  <h2 className="number">16</h2>
-                  <p className="sub-title">Số lượng hàng đã bán</p>
+                  <h2 className="number">{quantity?.order}</h2>
+                  <p className="sub-title">Số lượng đơn đã bán</p>
                 </div>
               </div>
             </div>
@@ -78,7 +90,7 @@ const Dashboard = () => {
                   <i className="fa-brands fa-product-hunt"></i>
                 </div>
                 <div className="content">
-                  <h2 className="number">24</h2>
+                  <h2 className="number">{quantity?.product}</h2>
                   <p className="sub-title">Số sản phẩm</p>
                 </div>
               </div>
@@ -91,7 +103,7 @@ const Dashboard = () => {
                   <i className="fa-solid fa-user"></i>
                 </div>
                 <div className="content">
-                  <h2 className="number">4</h2>
+                  <h2 className="number">{quantity?.user}</h2>
                   <p className="sub-title">Người dùng</p>
                 </div>
               </div>

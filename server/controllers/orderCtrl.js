@@ -1,5 +1,7 @@
 const Orders = require("../models/Order");
 const Products = require("../models/Product");
+const Users = require("../models/userModel");
+const Category = require("../models/Category");
 class APIfeatures {
   constructor(query, queryString) {
     this.query = query;
@@ -287,6 +289,7 @@ const orderCtrl = {
       console.log(req.body.dateStart);
       console.log(req.body.dateEnd);
       const orders = await Orders.find({
+        status_order: 2,
         createdAt: {
           $gte: new Date(req.body.dateStart),
           $lte: new Date(req.body.dateEnd),

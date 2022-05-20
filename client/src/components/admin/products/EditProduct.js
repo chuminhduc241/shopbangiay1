@@ -110,12 +110,18 @@ const EditProduct = ({ edit, setEdit, product, call, setCall }) => {
       return;
     }
     console.log(imagesPreview);
+    const newArr = [];
+    for (let i = 0; i < soluong.length; i++) {
+      if (soluong[i].quantity !== 0) {
+        newArr.push(soluong[i]);
+      }
+    }
     const newProduct = {
       id: product._id,
       ...value,
       price: Number(value.price),
       images: imagesPreview,
-      sizeQuantity: soluong,
+      sizeQuantity: newArr,
     };
     console.log(newProduct);
     try {
@@ -253,7 +259,7 @@ const EditProduct = ({ edit, setEdit, product, call, setCall }) => {
                 Nam
               </Radio>
               <Radio value="Nữ">Nữ</Radio>
-              <Radio value="unisex">Nam, Nữ</Radio>
+              <Radio value="Nam, Nữ">Nam, Nữ</Radio>
             </Radio.Group>
           </Form.Item>
           <Form.Item

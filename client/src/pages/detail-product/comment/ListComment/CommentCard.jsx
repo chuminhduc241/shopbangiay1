@@ -6,9 +6,9 @@ import { useSelector } from "react-redux";
 import { ExclamationCircleOutlined } from "@ant-design/icons";
 import { ProductService } from "services/product-service";
 moment.locale("vi");
-const CommentCard = ({ call,setCall, comment, children }) => {
+const CommentCard = ({ call, setCall, comment, children, type }) => {
   const { user } = useSelector((state) => state.auth);
- const productService = new ProductService()
+  const productService = new ProductService();
   const avatarLogo =
     "https://res.cloudinary.com/phuockaito/image/upload/v1618158354/tich-xanh-fanpage-va-quang-cao-livestream-fanpage-tich-xanh_ttn2e7.png";
   const deleteComment = () => {
@@ -31,8 +31,8 @@ const CommentCard = ({ call,setCall, comment, children }) => {
         console.log("Cancel");
       },
     });
-  }
-    return (
+  };
+  return (
     <div>
       <div className="item-comment">
         <div className="avatar-author">
@@ -50,9 +50,13 @@ const CommentCard = ({ call,setCall, comment, children }) => {
                 </h3>
                 {comment?.id_user?.role === 1 && <p>Quản trị viên</p>}
                 {(comment?.id_user?.role === 1 ||
-                  comment?.id_user?._id === user._id) && (
-                  <i onClick={deleteComment} className="fa-solid fa-x delete-comment"></i>
-                )}
+                  comment?.id_user?._id === user._id) &&
+                  type !== "reply" && (
+                    <i
+                      onClick={deleteComment}
+                      className="fa-solid fa-x delete-comment"
+                    ></i>
+                  )}
               </div>
               <div className="time-content">
                 <Tooltip

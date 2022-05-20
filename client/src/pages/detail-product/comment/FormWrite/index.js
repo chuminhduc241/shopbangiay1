@@ -89,7 +89,7 @@ export default function FormWrite({ product_id, socket, user }) {
             <Avatar src={showIconImage(ImageDefault, user)} alt="Han Solo" />
           }
         >
-          <Rate onChange={handleChange} defaultValue={star} />
+          <Rate onChange={handleChange} value={star} />
           <div className="group-length-content">
             <p>{content.length}/700</p>
           </div>

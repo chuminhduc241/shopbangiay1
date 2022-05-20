@@ -6,7 +6,7 @@ import FormInput from "../formInput/FormInput";
 import CommentCard from "./CommentCard";
 import "./commentCard.scss";
 let showComments = [];
-const CommentItem = ({call ,setCall, comment, user, socket }) => {
+const CommentItem = ({ call, setCall, comment, user, socket }) => {
   const [reply, setReply] = useState(false);
   const [name, setName] = useState("");
   const [replyComment, setReplyComment] = useState([]);
@@ -62,7 +62,7 @@ const CommentItem = ({call ,setCall, comment, user, socket }) => {
         <div className="reply_comment">
           {replyComment.map((rep) => (
             <div key={rep._id} className="repply-group1">
-              <CommentCard comment={rep} user={rep.id_user}>
+              <CommentCard comment={rep} type="reply" user={rep.id_user}>
                 <div className="nav_comment">
                   <p
                     className="ground-reply"
