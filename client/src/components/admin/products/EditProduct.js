@@ -12,6 +12,7 @@ import {
   Col,
   Radio,
   message,
+  InputNumber,
 } from "antd";
 import Tags from "../Tag";
 import "./edit.scss";
@@ -49,6 +50,32 @@ const EditProduct = ({ edit, setEdit, product, call, setCall }) => {
   const [fileList, setFileList] = useState([]);
   const [messError, setMessError] = useState(false);
   const [imagesPreview, setImagesPreview] = useState([]);
+  const [soluong, setSoLuong] = useState([
+    { size: 36, quantity: 0 },
+    { size: 37, quantity: 0 },
+    { size: 38, quantity: 0 },
+    { size: 39, quantity: 0 },
+    { size: 40, quantity: 0 },
+    { size: 41, quantity: 0 },
+    { size: 42, quantity: 0 },
+  ]);
+  useEffect(() => {
+    const newArr = [...soluong];
+
+    const newSoluong = [...product.sizeQuantity];
+    console.log(newSoluong);
+    for (let i = 0; i < soluong.length; i++) {
+      for (let j = 0; j < newSoluong.length; j++) {
+        if (+newArr[i].size === +newSoluong[j].size) {
+          newArr[i].quantity = +newSoluong[j].quantity;
+          console.log("vào");
+        }
+      }
+    }
+
+    setSoLuong([...newArr]);
+  }, [product]);
+  console.log(soluong);
   useEffect(() => {
     const getCategory = async () => {
       const res = await categoryServier.getCategory();
@@ -88,6 +115,7 @@ const EditProduct = ({ edit, setEdit, product, call, setCall }) => {
       ...value,
       price: Number(value.price),
       images: imagesPreview,
+      sizeQuantity: soluong,
     };
     console.log(newProduct);
     try {
@@ -110,6 +138,14 @@ const EditProduct = ({ edit, setEdit, product, call, setCall }) => {
     { label: 42, value: 42 },
     { label: 43, value: 43 },
   ];
+  const handleSize = (value, size, index) => {
+    console.log(value);
+    console.log(size);
+    console.log(index);
+    const newArr = [...soluong];
+    newArr[index] = { size: size, quantity: value };
+    setSoLuong([...newArr]);
+  };
   const [form] = Form.useForm();
 
   return (
@@ -141,7 +177,6 @@ const EditProduct = ({ edit, setEdit, product, call, setCall }) => {
             price: product.price,
             color: product.color,
             description: product.description,
-            size: product.size,
             isdiscount: product.isdiscount,
             discount: product.discount,
           }}
@@ -199,7 +234,7 @@ const EditProduct = ({ edit, setEdit, product, call, setCall }) => {
           >
             <TextArea rows={4} />
           </Form.Item>
-          <Form.Item
+          {/* <Form.Item
             label="Kích cỡ"
             name="size"
             rules={[
@@ -207,7 +242,7 @@ const EditProduct = ({ edit, setEdit, product, call, setCall }) => {
             ]}
           >
             <Checkbox.Group options={sizeOptions} />
-          </Form.Item>
+          </Form.Item> */}
           <Form.Item
             label="Giới tính"
             name="gender"
@@ -255,6 +290,35 @@ const EditProduct = ({ edit, setEdit, product, call, setCall }) => {
             <Tags form={form} initcolor={product.color} />
           </Form.Item>
         </Form>
+        <Row>
+          <Col
+            className="ant-col ant-col-6 ant-form-item-label"
+            style={{
+              display: "flex",
+              justifyContent: "flex-end",
+              alignItems: "center",
+            }}
+            span={8}
+          >
+            <div className="label-hinhanh">Kích cỡ</div>
+          </Col>
+          <Col>
+            <div className="soluong" style={{ display: "flex" }}>
+              {soluong.map((item, index) => (
+                <div key={item.size} style={{ marginLeft: 8 }}>
+                  <span style={{ marginRight: "8px" }}>{item.size}</span>
+                  <InputNumber
+                    size="large"
+                    min={0}
+                    max={100000}
+                    value={item.quantity}
+                    onChange={(value) => handleSize(value, item.size, index)}
+                  />
+                </div>
+              ))}
+            </div>
+          </Col>
+        </Row>
         <div className="div">
           <Row>
             <Col className="ant-col ant-col-6 ant-form-item-label" span={8}>

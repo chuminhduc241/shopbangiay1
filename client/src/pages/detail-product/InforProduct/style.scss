@@ -1,4 +1,9 @@
 .inforProduct {
+  div.is-disabled {
+    pointer-events: all;
+    opacity: 0.6;
+    cursor: not-allowed !important;
+  }
   border-radius: 8px;
   box-shadow: #efe9f2 0px 1px 6px;
   margin-top: 20px;
@@ -95,6 +100,7 @@
           .custom {
             display: inline-flex;
             margin-left: 10px;
+            align-items: center;
             .click-left {
               text-align: center;
               width: 40px;

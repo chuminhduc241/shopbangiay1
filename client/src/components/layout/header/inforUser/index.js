@@ -132,7 +132,7 @@ const InforUser = () => {
                       rules={[
                         {
                           required: true,
-                          message: "Nhập đầy đủ tên bạn !",
+                          message: "Nhập đầy số điện thoại !",
                           type: "string",
                         },
                         {
@@ -142,6 +142,10 @@ const InforUser = () => {
                         {
                           message: "Sai định dạng số điện thoại",
                           max: 11,
+                        },
+                        {
+                          message: "Sai định dạng số điện thoại",
+                          min: 10,
                         },
                       ]}
                     >

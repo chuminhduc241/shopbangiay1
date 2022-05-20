@@ -120,7 +120,7 @@ const productCtrl = {
       price,
       gender,
       color,
-      size,
+      sizeQuantity,
       category,
       discount,
       isdiscount,
@@ -138,7 +138,7 @@ const productCtrl = {
           price,
           gender,
           color,
-          size,
+          sizeQuantity,
           category,
           discount,
           isdiscount,
@@ -199,8 +199,15 @@ const productCtrl = {
   },
   createProduct: async (req, res) => {
     try {
-      const { name, description, price, gender, color, size, category } =
-        req.body;
+      const {
+        name,
+        description,
+        price,
+        gender,
+        color,
+        sizeQuantity,
+        category,
+      } = req.body;
       let images = [];
       if (typeof req.body.images === "string") {
         images.push(req.body.images);
@@ -223,7 +230,7 @@ const productCtrl = {
         price,
         gender,
         color,
-        size,
+        sizeQuantity,
         category,
         images: imagesLinks,
       });

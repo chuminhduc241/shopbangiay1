@@ -1,10 +1,10 @@
 import { ShoppingCartOutlined } from "@ant-design/icons";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Button, Image, message, Rate } from "antd";
 import Slider from "react-slick";
 import { addCart } from "redux/cartSlice";
 import popup from "components/common/Popup";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import "./style.scss";
 
 export default function InForProduct({ product }) {
@@ -74,15 +74,65 @@ export default function InForProduct({ product }) {
   };
   const [size, setSize] = useState();
   const [soLuong, setSoLuong] = useState(1);
+
+  const [totalSum, setTotalSum] = useState();
+  const { cart } = useSelector((state) => state.cart);
+  useEffect(() => {
+    const total = product?.sizeQuantity.reduce((total, current) => {
+      return total + current.quantity;
+    }, 0);
+    setTotalSum(total);
+  }, [product]);
   const preNumber = () => {
     const number = Math.max(1, soLuong - 1);
     setSoLuong(number);
   };
+  console.log(cart);
+
   const nextNumber = () => {
-    const number = Math.min(5, soLuong + 1);
-    setSoLuong(number);
+    // const number = Math.min(5, soLuong + 1);
+    const number = soLuong + 1;
+    const fileIndex = (product, size, id) => {
+      let result = -1;
+      product.forEach((productCart, index) => {
+        if (
+          productCart.product.size === size &&
+          productCart.product._id === id
+        ) {
+          result = index;
+        }
+      });
+      return result;
+    };
+    const index = fileIndex(cart, size, product._id);
+    console.log(index);
+    let vt = 0;
+    product.sizeQuantity.forEach((item, index) => {
+      if (item.size === size) {
+        vt = index;
+      }
+    });
+    const quantityBySize = product.sizeQuantity[vt].quantity;
+    if (index === -1) {
+      if (number <= quantityBySize) {
+        setSoLuong(number);
+      } else {
+        message.error(
+          `Bạn đã có ${quantityBySize} sản phẩm trong giỏ hàng. Không thể thêm số lượng đã chọn vào giỏ hàng vì sẽ vượt quá giới hạn mua hàng của bạn.`
+        );
+      }
+    } else {
+      if (cart[index].quantity + number <= quantityBySize) {
+        setSoLuong(number);
+      } else {
+        message.error(
+          `Bạn đã có ${quantityBySize} sản phẩm trong giỏ hàng. Không thể thêm số lượng đã chọn vào giỏ hàng vì sẽ vượt quá giới hạn mua hàng của bạn.`
+        );
+      }
+    }
   };
   const dispatch = useDispatch();
+
   const handleAddCart = () => {
     if (!size) {
       popup(
@@ -91,17 +141,66 @@ export default function InForProduct({ product }) {
         "error"
       );
     } else {
-      dispatch(
-        addCart({
-          product: {
-            ...product,
-            size,
-            price: product.price - (product.price * product.discount) / 100,
-          },
-          quantity: soLuong,
-        })
-      );
-      message.success("Thêm vào giỏ hàng thành công");
+      const fileIndex = (product, size, id) => {
+        let result = -1;
+        product.forEach((productCart, index) => {
+          if (
+            productCart.product.size === size &&
+            productCart.product._id === id
+          ) {
+            result = index;
+          }
+        });
+        return result;
+      };
+      const index = fileIndex(cart, size, product._id);
+      console.log(index);
+      let vt = 0;
+      product.sizeQuantity.forEach((item, index) => {
+        if (item.size === size) {
+          vt = index;
+        }
+      });
+      const quantityBySize = product.sizeQuantity[vt].quantity;
+      if (index === -1) {
+        if (soLuong <= quantityBySize) {
+          dispatch(
+            addCart({
+              product: {
+                ...product,
+                size,
+                price: product.price - (product.price * product.discount) / 100,
+              },
+              quantity: soLuong,
+            })
+          );
+          setSoLuong(1);
+          message.success("Thêm vào giỏ hàng thành công");
+        } else {
+          message.error(
+            `Bạn đã có ${quantityBySize} sản phẩm trong giỏ hàng. Không thể thêm số lượng đã chọn vào giỏ hàng vì sẽ vượt quá giới hạn mua hàng của bạn.`
+          );
+        }
+      } else {
+        if (cart[index].quantity + soLuong <= quantityBySize) {
+          dispatch(
+            addCart({
+              product: {
+                ...product,
+                size,
+                price: product.price - (product.price * product.discount) / 100,
+              },
+              quantity: soLuong,
+            })
+          );
+          setSoLuong(1);
+          message.success("Thêm vào giỏ hàng thành công");
+        } else {
+          message.error(
+            `Bạn đã có ${quantityBySize} sản phẩm trong giỏ hàng. Không thể thêm số lượng đã chọn vào giỏ hàng vì sẽ vượt quá giới hạn mua hàng của bạn.`
+          );
+        }
+      }
     }
   };
   const loadPrice = (product) => {
@@ -131,6 +230,17 @@ export default function InForProduct({ product }) {
         </div>
       );
     }
+  };
+  const handleChangeSize = (size) => {
+    setSize(size);
+    setSoLuong(1);
+    let vt = 0;
+    product.sizeQuantity.forEach((item, index) => {
+      if (item.size === size) {
+        vt = index;
+      }
+    });
+    setTotalSum(product.sizeQuantity[vt].quantity);
   };
   return (
     <>
@@ -181,14 +291,24 @@ export default function InForProduct({ product }) {
               </div>
               <div className="group-product-infor">
                 Kích cỡ:
-                {product?.size.map((s, i) => {
+                {product?.sizeQuantity.map((s, i) => {
                   return (
-                    <div className="size-item" key={i}>
+                    <div
+                      aria-disabled={s.quantity <= 0}
+                      className={
+                        s.quantity <= 0 ? "is-disabled size-item" : "size-item"
+                      }
+                      key={i}
+                    >
                       <span
-                        onClick={() => setSize(s)}
-                        className={s === size ? "size-item-active" : ""}
+                        onClick={
+                          s.quantity > 0
+                            ? () => handleChangeSize(s.size)
+                            : undefined
+                        }
+                        className={s.size === size ? "size-item-active" : ""}
                       >
-                        {s}
+                        {s.size}
                       </span>
                     </div>
                   );
@@ -204,6 +324,9 @@ export default function InForProduct({ product }) {
 
                   <div className="click-right" onClick={nextNumber}>
                     +
+                  </div>
+                  <div style={{ marginLeft: 8 }}>
+                    {totalSum} sản phẩm có sẵn
                   </div>
                 </div>
               </div>

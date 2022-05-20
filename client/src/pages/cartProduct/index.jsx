@@ -4,6 +4,7 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { updateCart, deleteCart } from "redux/cartSlice";
+import { ProductService } from "services/product-service";
 import CheckOut from "./CheckOut";
 import "./style.css";
 export default function CartProduct() {
@@ -12,6 +13,16 @@ export default function CartProduct() {
   const [visible, setVisible] = useState(false);
   const dispatch = useDispatch();
   const formatter = new Intl.NumberFormat("vn");
+  const [dataProduct, setDataProduct] = useState([]);
+  const productService = new ProductService();
+  useEffect(() => {
+    const getProduct = async () => {
+      const res = await productService.getProducts({ limit: 1000000 });
+      setDataProduct(res.products);
+    };
+    getProduct();
+  }, []);
+  console.log(dataProduct);
   useEffect(() => {
     const sumPrice = dataCart.reduce((pre, item) => {
       return pre + item.product.price * item.quantity;
@@ -20,13 +31,35 @@ export default function CartProduct() {
   }, [dataCart]);
 
   const increment = (quantity, index) => {
-    dispatch(updateCart({ index, quantity: quantity + 1 }));
-    message.success("Cập nhập giỏ hàng thành công");
+    const [product] = dataProduct.filter((item) => {
+      return item._id === dataCart[index].product._id;
+    });
+    const {
+      product: { size },
+    } = dataCart[index];
+    let maxQuantity = 0;
+    product.sizeQuantity.forEach((item) => {
+      if (item.size === size) {
+        maxQuantity = item.quantity;
+      }
+    });
+    if (quantity + 1 <= maxQuantity) {
+      dispatch(updateCart({ index, quantity: quantity + 1 }));
+      message.success("Cập nhập giỏ hàng thành công");
+    } else {
+      message.error(
+        `Bạn đã có ${maxQuantity} sản phẩm trong giỏ hàng. Không thể thêm số lượng đã chọn vào giỏ hàng vì sẽ vượt quá giới hạn mua hàng của bạn.`
+      );
+    }
   };
   const decrement = (quantity, index) => {
-    const soluong = Math.max(1, quantity - 1);
-    dispatch(updateCart({ index, quantity: soluong }));
-    message.success("Cập nhập giỏ hàng thành công");
+    // const soluong = Math.max(1, quantity - 1);
+    if (quantity - 1 === 0) {
+      message.error("Không thể giảm số lượng trong giỏ hàng");
+    } else {
+      dispatch(updateCart({ index, quantity: quantity - 1 }));
+      message.success("Cập nhập giỏ hàng thành công");
+    }
   };
   const handleDeleteCart = (index) => {
     dispatch(deleteCart(index));
@@ -55,7 +88,6 @@ export default function CartProduct() {
             <div className="frames-card-item">
               {dataCart.map((card, index) => (
                 <div className="card-items" key={index}>
-                  {console.log(card)}
                   <button
                     className="delete-item"
                     onClick={() => {
@@ -79,6 +111,7 @@ export default function CartProduct() {
                       to={`/detail/${card.product._id}`}
                     >
                       <p>
+                        {console.log(card.product)}
                         {card.product.name} -{" "}
                         <span>size {card.product.size}</span>
                       </p>

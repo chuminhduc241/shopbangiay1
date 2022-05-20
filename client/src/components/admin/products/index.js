@@ -74,9 +74,10 @@ const Products = () => {
     },
     {
       title: "Kích cỡ",
-      dataIndex: "size",
-      key: "size",
-      render: (size) => size.map((s) => <span key={s}>{s} </span>),
+      dataIndex: "sizeQuantity",
+      key: "sizeQuantity",
+      render: (sizeQuantity) =>
+        sizeQuantity.map((s) => <span key={s.size}>{s.size} </span>),
     },
     {
       title: "Màu sắc",

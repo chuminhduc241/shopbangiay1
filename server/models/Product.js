@@ -42,7 +42,18 @@ const productSchema = mongoose.Schema(
         },
       },
     ],
-    size: { type: Array, required: [true, "Vui long nhap size"] },
+    sizeQuantity: [
+      {
+        size: {
+          type: String,
+          required: true,
+        },
+        quantity: {
+          type: Number,
+          required: true,
+        },
+      },
+    ],
     category: {
       type: String,
       required: [true, "Please Enter Product Category"],

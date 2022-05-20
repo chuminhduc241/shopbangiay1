@@ -146,6 +146,7 @@ function ProductsType() {
             {
               <Pagination
                 Current={page}
+                defaultCurrent={page}
                 onChange={handleChangePage}
                 total={totalPages * 10}
                 style={{ textAlign: "center" }}

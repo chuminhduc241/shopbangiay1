@@ -7,36 +7,6 @@ import dataCity from "../../data.json";
 
 const { Option } = Select;
 
-const formItemLayout = {
-  labelCol: {
-    xs: {
-      span: 24,
-    },
-    sm: {
-      span: 24,
-    },
-    lg: {
-      span: 24,
-    },
-    xl: {
-      span: 24,
-    },
-  },
-  wrapperCol: {
-    xs: {
-      span: 0,
-    },
-    sm: {
-      span: 24,
-    },
-    lg: {
-      span: 24,
-    },
-    xl: {
-      span: 24,
-    },
-  },
-};
 export default function CheckOut({ visible, setVisible, dataCart }) {
   const { TextArea } = Input;
   const [form] = Form.useForm();
@@ -80,10 +50,14 @@ export default function CheckOut({ visible, setVisible, dataCart }) {
       id_user: user?._id,
     };
     try {
-      await orderService.createOrder(cartInformation);
+      const res = await orderService.createOrder(cartInformation);
       dispatch(removeCart());
       setVisible(false);
-      message.success("Đặt hàng thành công");
+      if (res.type === "success") {
+        message.success("Đặt hàng thành công");
+      } else {
+        message.error("Đặt hàng thất bại do số lượng không đủ");
+      }
     } catch (error) {
       console.log(error);
       message.error("Đặt hàng thất bại");
@@ -113,7 +87,11 @@ export default function CheckOut({ visible, setVisible, dataCart }) {
       const res = await orderService.createOrder(cartInformation);
       dispatch(removeCart());
       setVisible(false);
-      message.success("Đặt hàng thành công");
+      if (res.type === "success") {
+        message.success("Đặt hàng thành công");
+      } else {
+        message.error("Đặt hàng thất bại do số lượng không đủ");
+      }
     } catch (error) {
       message.error("Đặt hàng thất bại");
     }

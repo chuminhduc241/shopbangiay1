@@ -1,4 +1,5 @@
 const Orders = require("../models/Order");
+const Products = require("../models/Product");
 class APIfeatures {
   constructor(query, queryString) {
     this.query = query;
@@ -46,6 +47,9 @@ class APIfeatures {
 }
 const orderCtrl = {
   getAllOrder: async (req, res) => {
+    console.log(req.query);
+
+    console.log("?");
     try {
       const features = new APIfeatures(
         Orders.find().populate("id_user"),
@@ -62,8 +66,14 @@ const orderCtrl = {
   },
   getAllOrderbyId: async (req, res) => {
     try {
-      const oders = await Orders.find({ id_user: req.params.id });
-
+      const features = new APIfeatures(
+        Orders.find({ id_user: req.params.id }),
+        req.query
+      )
+        .filtering()
+        .sorting()
+        .paginating();
+      const oders = await features.query;
       return res.status(200).json(oders);
     } catch (err) {
       return res.status(500).json({ msg: err.message });
@@ -95,8 +105,45 @@ const orderCtrl = {
         status_order,
       });
 
-      await neworder.save();
-      res.json({ msg: "Tạo thành công đơn hàng" });
+      const products = await Products.find();
+      for (let i = 0; i < order_detail.length; i++) {
+        //
+        let {
+          product: { _id, size },
+          quantity,
+        } = order_detail[i];
+        console.log(_id);
+        let pos = products
+          .map((item) => {
+            return item._id.toString();
+          })
+          .indexOf(_id);
+        const newArray = [...products[pos].sizeQuantity];
+        let posSize = newArray
+          .map((item) => {
+            return item.size;
+          })
+          .indexOf(size);
+        console.log(newArray[posSize]);
+        if (newArray[posSize].quantity >= quantity) {
+          newArray[posSize].quantity = newArray[posSize].quantity - quantity;
+          await Products.findOneAndUpdate(
+            { _id },
+            {
+              sizeQuantity: newArray,
+            }
+          );
+          await neworder.save();
+          res.json({ msg: "Tạo thành công đơn hàng", type: "success" });
+        } else {
+          res.json({
+            msg: "Tạo đơn hàng thất bại số lượng đã được bán hết !",
+            type: "error",
+          });
+        }
+      }
+      // await neworder.save();
+      // res.json({ msg: "Tạo thành công đơn hàng" });
     } catch (err) {
       return res.status(500).json({ msg: err.message });
     }
@@ -114,8 +161,75 @@ const orderCtrl = {
   updateStatus: async (req, res) => {
     try {
       const { id, status } = req.body;
-      await Orders.findOneAndUpdate({ _id: id }, { status_order: status });
+      const order = await Orders.findById(id);
+      const products = await Products.find();
+      if (status === -1) {
+        for (let i = 0; i < order.order_detail.length; i++) {
+          //
+          let {
+            product: { _id, size },
+            quantity,
+          } = order.order_detail[i];
+          let pos = products
+            .map((item) => {
+              return item._id.toString();
+            })
+            .indexOf(_id);
+          const newArray = [...products[pos].sizeQuantity];
+          let posSize = newArray
+            .map((item) => {
+              return item.size;
+            })
+            .indexOf(size);
+          console.log(newArray[posSize]);
 
+          newArray[posSize].quantity = newArray[posSize].quantity + quantity;
+          await Products.findOneAndUpdate(
+            { _id },
+            {
+              sizeQuantity: newArray,
+            }
+          );
+          await Orders.findOneAndUpdate({ _id: id }, { status_order: status });
+          return res.status(200).json({ msg: "Cập nhật thành công" });
+        }
+        await Orders.findOneAndUpdate({ _id: id }, { status_order: status });
+        return res.status(200).json({ msg: "Cập nhập thành công" });
+      }
+      if (status === 0) {
+        for (let i = 0; i < order.order_detail.length; i++) {
+          //
+          let {
+            product: { _id, size },
+            quantity,
+          } = order.order_detail[i];
+          let pos = products
+            .map((item) => {
+              return item._id.toString();
+            })
+            .indexOf(_id);
+          const newArray = [...products[pos].sizeQuantity];
+          let posSize = newArray
+            .map((item) => {
+              return item.size;
+            })
+            .indexOf(size);
+          console.log(newArray[posSize]);
+
+          newArray[posSize].quantity = newArray[posSize].quantity - quantity;
+          await Products.findOneAndUpdate(
+            { _id },
+            {
+              sizeQuantity: newArray,
+            }
+          );
+          await Orders.findOneAndUpdate({ _id: id }, { status_order: status });
+          return res.status(200).json({ msg: "Cập nhật thành công" });
+        }
+        await Orders.findOneAndUpdate({ _id: id }, { status_order: status });
+        return res.status(200).json({ msg: "Cập nhập thành công" });
+      }
+      await Orders.findOneAndUpdate({ _id: id }, { status_order: status });
       return res.status(200).json({ msg: "Cập nhập thành công" });
     } catch (err) {
       return res.status(500).json({ msg: err.message });
@@ -133,8 +247,37 @@ const orderCtrl = {
   },
   deleteOrder: async (req, res) => {
     try {
-      await Orders.findByIdAndDelete(req.params.id);
-      res.json({ msg: "Xóa thành công" });
+      const order = await Orders.findById(req.params.id);
+      const products = await Products.find();
+      for (let i = 0; i < order.order_detail.length; i++) {
+        //
+        let {
+          product: { _id, size },
+          quantity,
+        } = order.order_detail[i];
+        let pos = products
+          .map((item) => {
+            return item._id.toString();
+          })
+          .indexOf(_id);
+        const newArray = [...products[pos].sizeQuantity];
+        let posSize = newArray
+          .map((item) => {
+            return item.size;
+          })
+          .indexOf(size);
+        console.log(newArray[posSize]);
+
+        newArray[posSize].quantity = newArray[posSize].quantity + quantity;
+        await Products.findOneAndUpdate(
+          { _id },
+          {
+            sizeQuantity: newArray,
+          }
+        );
+        await Orders.findByIdAndDelete(req.params.id);
+        res.json({ msg: "Xóa thành công" });
+      }
     } catch (err) {
       return res.status(500).json({ msg: err.message });
     }

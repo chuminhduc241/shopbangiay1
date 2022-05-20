@@ -12,6 +12,7 @@ import {
   Col,
   Radio,
   message,
+  InputNumber,
 } from "antd";
 import Tags from "../Tag";
 import "./newproduct.scss";
@@ -49,6 +50,16 @@ const NewProduct = ({ setIsNewProduct, isNewProduct }) => {
   const [fileList, setFileList] = useState([]);
   const [messError, setMessError] = useState(false);
   const [imagesPreview, setImagesPreview] = useState([]);
+  const [soluong, setSoLuong] = useState([
+    { size: 36, quantity: 0 },
+    { size: 37, quantity: 0 },
+    { size: 38, quantity: 0 },
+    { size: 39, quantity: 0 },
+    { size: 40, quantity: 0 },
+    { size: 41, quantity: 0 },
+    { size: 42, quantity: 0 },
+  ]);
+
   useEffect(() => {
     const getCategory = async () => {
       const res = await categoryServier.getCategory();
@@ -86,10 +97,17 @@ const NewProduct = ({ setIsNewProduct, isNewProduct }) => {
       price: Number(value.price),
       images: imagesPreview,
     };
-    console.log(newProduct);
-    await productService.addProduct(newProduct);
+    const newArr = [];
+    for (let i = 0; i < soluong.length; i++) {
+      if (soluong[i].quantity !== 0) {
+        newArr.push(soluong[i]);
+      }
+    }
+    await productService.addProduct({ ...newProduct, sizeQuantity: newArr });
     message.success("Thêm sản phẩm thành công");
   };
+
+  console.log(soluong);
   const sizeOptions = [
     { label: "36", value: 36 },
     { label: "37", value: 37 },
@@ -101,7 +119,14 @@ const NewProduct = ({ setIsNewProduct, isNewProduct }) => {
     { label: "43", value: 43 },
   ];
   const [form] = Form.useForm();
-
+  const handleSize = (value, size, index) => {
+    console.log(value);
+    console.log(size);
+    console.log(index);
+    const newArr = [...soluong];
+    newArr[index] = { size: size, quantity: value };
+    setSoLuong([...newArr]);
+  };
   return (
     <div className="new-product">
       <Modal
@@ -179,7 +204,7 @@ const NewProduct = ({ setIsNewProduct, isNewProduct }) => {
           >
             <TextArea rows={4} />
           </Form.Item>
-          <Form.Item
+          {/* <Form.Item
             label="Kích cỡ"
             name="size"
             rules={[
@@ -187,7 +212,8 @@ const NewProduct = ({ setIsNewProduct, isNewProduct }) => {
             ]}
           >
             <Checkbox.Group options={sizeOptions} />
-          </Form.Item>
+          </Form.Item> */}
+
           <Form.Item
             label="Giới tính"
             name="gender"
@@ -198,7 +224,7 @@ const NewProduct = ({ setIsNewProduct, isNewProduct }) => {
                 Nam
               </Radio>
               <Radio value="Nữ">Nữ</Radio>
-              <Radio value="unisex">Nam, Nữ</Radio>
+              <Radio value="Nam, Nữ">Nam, Nữ</Radio>
             </Radio.Group>
           </Form.Item>
           <Form.Item
@@ -211,8 +237,38 @@ const NewProduct = ({ setIsNewProduct, isNewProduct }) => {
             <Tags form={form} />
           </Form.Item>
         </Form>
-        <div className="div">
-          <Row>
+        <Row>
+          <Col
+            className="ant-col ant-col-6 ant-form-item-label"
+            style={{
+              display: "flex",
+              justifyContent: "flex-end",
+              alignItems: "center",
+            }}
+            span={8}
+          >
+            <div className="label-hinhanh">Kích cỡ</div>
+          </Col>
+          <Col>
+            <div className="soluong" style={{ display: "flex" }}>
+              {soluong.map((item, index) => (
+                <div key={item.size} style={{ marginLeft: 8 }}>
+                  <span style={{ marginRight: "8px" }}>{item.size}</span>
+                  <InputNumber
+                    size="large"
+                    min={0}
+                    max={100000}
+                    defaultValue={0}
+                    value={item.quantity}
+                    onChange={(value) => handleSize(value, item.size, index)}
+                  />
+                </div>
+              ))}
+            </div>
+          </Col>
+        </Row>
+        <div className="div" style={{ marginTop: "20px" }}>
+          <Row style={{ alignItems: "center" }}>
             <Col className="ant-col ant-col-6 ant-form-item-label" span={8}>
               <div className="label-hinhanh">Hình ảnh</div>
             </Col>
