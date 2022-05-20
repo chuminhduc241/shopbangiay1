@@ -5,6 +5,7 @@ import Cart from "./cart/Cart";
 import User from "./inforUser/User";
 import Search from "./search/Search";
 import "./style.scss";
+import logo from "assets/images/logo.png"
 const Header = ({ setOpenMenu }) => {
   return (
     <>
@@ -12,10 +13,10 @@ const Header = ({ setOpenMenu }) => {
         <div className="main-header">
           <div className="main-item-logo">
             <Link to="/">
-              {/* <img src="" alt="This logo" /> */}
-              <div className="logo2">
-                MĐ<span>Shop</span>
-              </div>
+              <img src={logo} alt="This logo"/>
+                {/* <div className="logo2">
+                  MĐ<span>Shop</span>
+                </div> */}
             </Link>
           </div>
           <Search />
