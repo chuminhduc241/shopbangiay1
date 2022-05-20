@@ -36,14 +36,13 @@ export const options = {
 export function TotalRevenue() {
   let { data: dulieu } = useSelector((state) => state.order);
   let listorder = dulieu?.orders;
+  console.log(listorder);
 
   let dataOrder = [];
   for (let i = 0; i < listorder?.length; i++) {
-    let dat = JSON.stringify(...listorder[i].order_detail);
-    dat = JSON.parse(dat);
-    dataOrder = [...dataOrder, dat];
+    dataOrder = [...dataOrder, ...listorder[i].order_detail];
   }
-
+  console.log(dataOrder);
   if (dataOrder.length !== 0) {
     for (let i = 0; i < dataOrder.length - 1; i++) {
       if (dataOrder[i].product._id === dataOrder[i + 1].product._id) {
