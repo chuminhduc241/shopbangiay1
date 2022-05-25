@@ -50,7 +50,7 @@ const CommentCard = ({ call, setCall, comment, children, type }) => {
                   )}
                 </h3>
                 {comment?.id_user?.role === 1 && <p>Quản trị viên</p>}
-                {(user.role === 1 || comment?.id_user?._id === user._id) &&
+                {(user?.role === 1 || comment?.id_user?._id === user?._id) &&
                   type !== "reply" && (
                     <i
                       onClick={deleteComment}
