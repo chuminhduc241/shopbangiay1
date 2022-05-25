@@ -69,7 +69,6 @@ const CommentCard = ({ call, setCall, comment, children, type }) => {
                   <span className="edit">(đã chỉnh sửa)</span>
                 )}
               </div>
-
               <div className="group-start">
                 {comment?.rating > 0 && (
                   <Rate disabled value={comment?.rating} />
