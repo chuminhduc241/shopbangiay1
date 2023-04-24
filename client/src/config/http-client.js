@@ -8,7 +8,7 @@ export class HttpClient {
   constructor() {
     const tokenAccess = localStorage.getItem(LOCAL_STORAGE.ACCESS_TOKEN);
     let configs = {
-      baseURL: process.env.REACT_APP_API_ENDPOINT,
+      baseURL: process.env.REACT_APP_API_ENDPOINT3,
       headers: {
         "Content-Type": "application/json",
         Accept: "application/json",

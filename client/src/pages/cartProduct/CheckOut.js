@@ -1,6 +1,8 @@
 import { Button, Drawer, Form, Input, message, Select } from "antd";
+import Dashboard from "components/admin/dashboard";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { applyMiddleware } from "redux";
 import { removeCart } from "redux/cartSlice";
 import { OrderService } from "services/order-service";
 import dataCity from "../../data.json";
@@ -10,7 +12,6 @@ const { Option } = Select;
 export default function CheckOut({ visible, setVisible, dataCart }) {
   const { TextArea } = Input;
   const [form] = Form.useForm();
-  // create state
   const [city, setCity] = useState("");
   const [district, setDistrict] = useState("");
   const [display, setDisplay] = useState(true);
