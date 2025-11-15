@@ -17,7 +17,7 @@ export default function Search() {
 
   const submitSearch = (e) => {
     if (e) {
-      const search = e.keyWord.trim().replace(/ /g, "-");
+      const search = e.keyWord.trim();
       const url = `/search?query=${search}`;
       history.push(url);
     }

@@ -95,6 +95,7 @@ const NewProduct = ({ setIsNewProduct, isNewProduct }) => {
     const newProduct = {
       ...value,
       price: Number(value.price),
+      originalPrice: Number(value.originalPrice),
       images: imagesPreview,
     };
     const newArr = [];
@@ -163,19 +164,35 @@ const NewProduct = ({ setIsNewProduct, isNewProduct }) => {
             <Input />
           </Form.Item>
 
-          <Form.Item
-            label="Giá sản phẩm"
-            name="price"
-            rules={[
-              { required: true, message: "Vui lòng nhập giá sản phẩm" },
-              {
-                message: "Giá phải là một số",
-                pattern: new RegExp(/^[0-9]+$/),
-              },
-            ]}
-          >
-            <Input />
-          </Form.Item>
+          <div className="flex gap-4">
+            <Form.Item
+              label="Giá gốc"
+              name="originalPrice"
+              rules={[
+                { required: true, message: "Vui lòng nhập giá sản phẩm" },
+                {
+                  message: "Giá phải là một số",
+                  pattern: new RegExp(/^[0-9]+$/),
+                },
+              ]}
+            >
+              <Input />
+            </Form.Item>
+
+            <Form.Item
+              label="Giá bán"
+              name="price"
+              rules={[
+                { required: true, message: "Vui lòng nhập giá sản phẩm" },
+                {
+                  message: "Giá phải là một số",
+                  pattern: new RegExp(/^[0-9]+$/),
+                },
+              ]}
+            >
+              <Input />
+            </Form.Item>
+          </div>
 
           <Form.Item
             label="Thương hiệu"

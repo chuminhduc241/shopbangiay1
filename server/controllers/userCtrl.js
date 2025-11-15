@@ -27,6 +27,7 @@ const userCtrl = {
       sendEmail(email, url, "Click xác nhận địa chỉ email của bạn");
       return res.status(200).json({
         message: "Xác minh địa chỉ email của bạn",
+        accessToken: accessToken,
       });
     } catch (error) {
       console.log(error);

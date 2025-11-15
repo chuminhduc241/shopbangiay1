@@ -58,6 +58,11 @@ const Products = () => {
 
   const columns = [
     {
+      title: "Id",
+      dataIndex: "_id",
+      key: "_id",
+    },
+    {
       title: "Tên Sản phẩm",
       dataIndex: "name",
       key: "name",

@@ -84,6 +84,7 @@ const EditProduct = ({ edit, setEdit, product, call, setCall }) => {
     getCategory();
     setImages(product.images);
   }, []);
+  console.log(product, "product");
   const createProductImagesChange = (e) => {
     const files = Array.from(e.target.files);
     setMessError(false);
@@ -120,6 +121,7 @@ const EditProduct = ({ edit, setEdit, product, call, setCall }) => {
       id: product._id,
       ...value,
       price: Number(value.price),
+      originalPrice: Number(value.originalPrice),
       images: imagesPreview,
       sizeQuantity: newArr,
     };
@@ -185,6 +187,7 @@ const EditProduct = ({ edit, setEdit, product, call, setCall }) => {
             description: product.description,
             isdiscount: product.isdiscount,
             discount: product.discount,
+            originalPrice: product.originalPrice,
           }}
           labelCol={{ span: 6 }}
           wrapperCol={{ span: 18 }}
@@ -200,7 +203,21 @@ const EditProduct = ({ edit, setEdit, product, call, setCall }) => {
           </Form.Item>
 
           <Form.Item
-            label="Giá sản phẩm"
+            label="Giá gốc"
+            name="originalPrice"
+            rules={[
+              { required: true, message: "Vui lòng nhập giá sản phẩm" },
+              {
+                message: "Giá phải là một số",
+                pattern: new RegExp(/^[0-9]+$/),
+              },
+            ]}
+          >
+            <Input />
+          </Form.Item>
+
+          <Form.Item
+            label="Giá bán"
             name="price"
             rules={[
               { required: true, message: "Vui lòng nhập giá sản phẩm" },

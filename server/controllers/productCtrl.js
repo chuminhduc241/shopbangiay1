@@ -24,11 +24,6 @@ class APIfeatures {
       /\b(gte|gt|lt|lte|regex)\b/g,
       (match) => "$" + match
     );
-
-    //    gte = greater than or equal
-    //    lte = lesser than or equal
-    //    lt = lesser than
-    //    gt = greater than
     this.query.find(JSON.parse(queryStr));
 
     return this;
@@ -127,6 +122,7 @@ const productCtrl = {
       category,
       discount,
       isdiscount,
+      originalPrice,
     } = req.body;
     let product = await Products.findById(req.params.id);
     if (!product) {
@@ -145,6 +141,7 @@ const productCtrl = {
           category,
           discount,
           isdiscount,
+          originalPrice,
         }
       );
       res.status(200).json({
@@ -206,6 +203,7 @@ const productCtrl = {
         name,
         description,
         price,
+        originalPrice,
         gender,
         color,
         sizeQuantity,
@@ -236,6 +234,7 @@ const productCtrl = {
         sizeQuantity,
         category,
         images: imagesLinks,
+        originalPrice,
       });
       await newProduct.save();
       return res.status(200).json({
