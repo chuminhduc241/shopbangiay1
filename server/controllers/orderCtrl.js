@@ -298,18 +298,27 @@ const orderCtrl = {
       console.log(orders);
 
       let totalAmount = 0;
+      let profit = 0;
 
-      orders.forEach((order) => {
-        totalAmount += order.totalSum;
-      });
+      for (let index = 0; index < orders.length; index++) {
+        totalAmount += orders[index].totalSum;
+        const products = orders[index]?.["order_detail"];
+        for (let i = 0; i < products.length; i++) {
+          const p = products[i];
+          const product = await Products.findById(p.product?._id);
+          const amount = (product?.originalPrice || product.price) * p.quantity;
+          profit += amount;
+        }
+      }
 
       res.status(200).json({
         success: true,
         totalAmount,
         orders,
+        profit: totalAmount - profit,
       });
     } catch (error) {
-      return res.status(500).json({ msg: err.message });
+      return res.status(500).json({ msg: error.message });
     }
   },
 };

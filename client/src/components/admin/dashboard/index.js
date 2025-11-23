@@ -113,10 +113,17 @@ const Dashboard = () => {
 
         <div className="total-revenue">
           <div className="box1">
-            <h3>
-              Tổng doanh thu {data && formatter.format(data.totalAmount)}{" "}
-              {data && <u>đ</u>}
-            </h3>
+            <div>
+              <h4>
+                Tổng doanh thu {data && formatter.format(data.totalAmount)}{" "}
+                {data && <u>đ</u>}
+              </h4>
+              <h4>
+                Lợi nhuận {data && formatter.format(data.profit)}{" "}
+                {data && <u>đ</u>}
+              </h4>
+              <h4>Số đơn hàng {data?.orders?.length}</h4>
+            </div>
             <div className="box2">
               <RangePicker
                 ranges={{
